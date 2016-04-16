@@ -8,6 +8,8 @@
 
 #import "KiwiConfiguration.h"
 
+// Block types and helper methods derived from http://opensource.apple.com//source/libclosure/libclosure-65/Block_private.h
+
 typedef enum {
     kKWBlockDeallocating        = (0x0001),  // runtime
     kKWBlockRefcountMask        = (0xfffe),  // runtime
@@ -16,7 +18,7 @@ typedef enum {
     kKWBlockHasCTOR             = (1 << 26), // compiler: helpers have C++ code
     kKWBlockIsGC                = (1 << 27), // runtime
     kKWBlockIsGlobal            = (1 << 28), // compiler
-    kKWBlockHasStructureReturn  = (1 << 29), // compiler: undefined if !BLOCK_HAS_SIGNATURE
+    kKWBlockHasStructureReturn  = (1 << 29), // compiler: undefined if !kKWBlockHasSignature
     kKWBlockHasSignature        = (1 << 30), // compiler
     kKWBlockHasExtendedLayout   = (1 << 31)  // compiler
 } kKWBlockOptions;
@@ -28,16 +30,16 @@ struct KWBlockDescriptor {
 typedef struct KWBlockDescriptor KWBlockDescriptor;
 
 struct KWBlockDescriptorCopyDispose {
-    // requires BLOCK_HAS_COPY_DISPOSE
+    // requires kKWBlockHasCopyDispose
     void (*copy)(void *dst, const void *src);
     void (*dispose)(const void *);
 };
 typedef struct KWBlockDescriptorCopyDispose KWBlockDescriptorCopyDispose;
 
 struct KWBlockDescriptorMetadata {
-    // requires BLOCK_HAS_SIGNATURE
+    // requires kKWBlockHasSignature
     const char *signature;
-    const char *layout;     // contents depend on BLOCK_HAS_EXTENDED_LAYOUT
+    const char *layout;     // contents depend on kKWBlockHasExtendedLayout
 };
 typedef struct KWBlockDescriptorMetadata KWBlockDescriptorMetadata;
 
@@ -50,27 +52,17 @@ struct KWBlockLayout {
 };
 typedef struct KWBlockLayout KWBlockLayout;
 
-
 FOUNDATION_EXPORT
-BOOL KWBlockLayoutGetFlags(KWBlockLayout *block);
+kKWBlockOptions KWBlockLayoutGetFlags(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
 BOOL KWBlockLayoutGetOption(KWBlockLayout *block, kKWBlockOptions option);
-
-FOUNDATION_EXPORT
-BOOL KWBlockLayoutIsDeallocating(KWBlockLayout *block);
-
-FOUNDATION_EXPORT
-BOOL KWBlockLayoutNeedsFree(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
 BOOL KWBlockLayoutHasCopyDispose(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
 BOOL KWBlockLayoutHasCTOR(KWBlockLayout *block);
-
-FOUNDATION_EXPORT
-BOOL KWBlockLayoutIsGC(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
 BOOL KWBlockLayoutIsGlobal(KWBlockLayout *block);
@@ -85,16 +77,13 @@ FOUNDATION_EXPORT
 BOOL KWBlockLayoutHasExtendedLayout(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
-BOOL KWBlockLayoutHasExtendedLayout(KWBlockLayout *block);
+IMP KWBlockLayoutGetImp(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
-BOOL KWBlockLayoutGetImp(KWBlockLayout *block);
+NSMethodSignature *KWBlockLayoutGetSignature(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
-BOOL KWBlockLayoutGetSignature(KWBlockLayout *block);
+KWBlockDescriptor *KWBlockLayoutGetDescriptor(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
-KWBlockDescriptor KWBlockLayoutGetDescriptor(KWBlockLayout *block);
-
-FOUNDATION_EXPORT
-KWBlockDescriptorMetadata KWBlockLayoutGetDescriptorMetadata(KWBlockLayout *block);
+KWBlockDescriptorMetadata *KWBlockLayoutGetDescriptorMetadata(KWBlockLayout *block);
