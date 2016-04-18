@@ -15,7 +15,7 @@ kKWBlockOptions KWBlockLayoutGetFlags(KWBlockLayout *block) {
 }
 
 BOOL KWBlockLayoutGetOption(KWBlockLayout *block, kKWBlockOptions option) {
-    return KWBlockLayoutGetFlags(block) & option;
+    return (KWBlockLayoutGetFlags(block) & option) > 0;
 }
 
 BOOL KWBlockLayoutHasCopyDispose(KWBlockLayout *block) {
@@ -95,5 +95,5 @@ KWBlockDescriptorMetadata *KWBlockLayoutGetDescriptorMetadata(KWBlockLayout *blo
 
 IMP KWBlockLayoutGetForwardingImp(KWBlockLayout *block) {
     // explicit type casting for OBJC_OLD_DISPATCH_PROTOTYPES
-    return KWBlockLayoutHasStructureReturn(block) ? (IMP)_objc_msgForward_stret : (IMP)_objc_msgForward;
+    return (IMP)(KWBlockLayoutHasStructureReturn(block) ? _objc_msgForward_stret : _objc_msgForward);
 }
