@@ -83,7 +83,10 @@ FOUNDATION_EXPORT
 uintptr_t KWBlockLayoutGetDescriptorSize(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
-NSMethodSignature *KWBlockLayoutGetSignature(KWBlockLayout *block);
+const char *KWBlockLayoutGetSignature(KWBlockLayout *block);
+
+FOUNDATION_EXPORT
+NSMethodSignature *KWBlockLayoutGetMethodSignature(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
 KWBlockDescriptor *KWBlockLayoutGetDescriptor(KWBlockLayout *block);

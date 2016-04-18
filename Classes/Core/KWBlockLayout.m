@@ -50,12 +50,21 @@ uintptr_t KWBlockLayoutGetDescriptorSize(KWBlockLayout *block) {
     return KWBlockLayoutGetDescriptor(block)->size;
 }
 
-NSMethodSignature *KWBlockLayoutGetSignature(KWBlockLayout *block) {
+const char *KWBlockLayoutGetSignature(KWBlockLayout *block) {
     if (!KWBlockLayoutHasSignature(block)) {
+        return NULL;
+    }
+    
+    return KWBlockLayoutGetDescriptorMetadata(block)->signature;
+}
+
+NSMethodSignature *KWBlockLayoutGetMethodSignature(KWBlockLayout *block) {
+    const char *UTF8Signature = KWBlockLayoutGetSignature(block);
+    if (!UTF8Signature) {
         return nil;
     }
     
-    NSString *signature = [NSString stringWithFormat: @"%s", KWBlockLayoutGetDescriptorMetadata(block)->signature];
+    NSString *signature = [NSString stringWithFormat: @"%s", UTF8Signature];
     
 #warning TODO: test the way it is in libclosure-65
     NSMethodSignature *result = [NSMethodSignature signatureWithObjCTypes:signature.UTF8String];

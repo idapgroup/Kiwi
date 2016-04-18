@@ -519,6 +519,10 @@
 		D775FDB51CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB61CC246590081F88E /* KWBlockLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = D775FDB31CC246590081F88E /* KWBlockLayout.h */; };
 		D775FDB71CC246590081F88E /* KWBlockLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = D775FDB31CC246590081F88E /* KWBlockLayout.h */; };
+		D7C3D13F1CC4DDA000A0E0AD /* KWProxyBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = D7C3D13D1CC4DDA000A0E0AD /* KWProxyBlock.h */; };
+		D7C3D1401CC4DDA000A0E0AD /* KWProxyBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = D7C3D13D1CC4DDA000A0E0AD /* KWProxyBlock.h */; };
+		D7C3D1411CC4DDA000A0E0AD /* KWProxyBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C3D13E1CC4DDA000A0E0AD /* KWProxyBlock.m */; };
+		D7C3D1421CC4DDA000A0E0AD /* KWProxyBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C3D13E1CC4DDA000A0E0AD /* KWProxyBlock.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -815,6 +819,8 @@
 		CE87C42D1AF194EA00310C07 /* KiwiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KiwiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D775FDB21CC246590081F88E /* KWBlockLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockLayout.m; sourceTree = "<group>"; };
 		D775FDB31CC246590081F88E /* KWBlockLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockLayout.h; sourceTree = "<group>"; };
+		D7C3D13D1CC4DDA000A0E0AD /* KWProxyBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWProxyBlock.h; sourceTree = "<group>"; };
+		D7C3D13E1CC4DDA000A0E0AD /* KWProxyBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWProxyBlock.m; sourceTree = "<group>"; };
 		DA084D3F17E3804200592D5A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DA084D4217E3804200592D5A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		DA3EAD0718A7A1D700EBBF57 /* KWSharedExampleFunctionalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWSharedExampleFunctionalTest.m; sourceTree = "<group>"; };
@@ -989,6 +995,8 @@
 				CE80E44F1AF255BF00D2F0D6 /* KWBackgroundTask.m */,
 				9F982C6116A802920030A0B1 /* KWBlock.h */,
 				9F982C6216A802920030A0B1 /* KWBlock.m */,
+				D7C3D13D1CC4DDA000A0E0AD /* KWProxyBlock.h */,
+				D7C3D13E1CC4DDA000A0E0AD /* KWProxyBlock.m */,
 				D775FDB31CC246590081F88E /* KWBlockLayout.h */,
 				D775FDB21CC246590081F88E /* KWBlockLayout.m */,
 				9F982C6716A802920030A0B1 /* KWCallSite.h */,
@@ -1396,6 +1404,7 @@
 				4AE030451AEB47FF00556381 /* KWMessageSpying.h in Headers */,
 				4AE030471AEB47FF00556381 /* KWNull.h in Headers */,
 				4AE030481AEB47FF00556381 /* KWObjCUtilities.h in Headers */,
+				D7C3D1401CC4DDA000A0E0AD /* KWProxyBlock.h in Headers */,
 				4AE0304C1AEB480000556381 /* KWSpec.h in Headers */,
 				4AE0304D1AEB480000556381 /* KWStringUtilities.h in Headers */,
 				4AE0304E1AEB480000556381 /* KWValue.h in Headers */,
@@ -1503,6 +1512,7 @@
 				CE87C4D91AF1963B00310C07 /* KWRespondToSelectorMatcher.h in Headers */,
 				CE87C4E81AF1963B00310C07 /* KWPendingNode.h in Headers */,
 				CE87C4A71AF1963B00310C07 /* KWLet.h in Headers */,
+				D7C3D13F1CC4DDA000A0E0AD /* KWProxyBlock.h in Headers */,
 				CE87C4C01AF1963B00310C07 /* KWNotificationMatcher.h in Headers */,
 				CE87C4AB1AF1963B00310C07 /* KWNull.h in Headers */,
 				CE87C4B41AF1963B00310C07 /* KWMatcher.h in Headers */,
@@ -1795,6 +1805,7 @@
 				D775FDB51CC246590081F88E /* KWBlockLayout.m in Sources */,
 				4AE030091AEB47E600556381 /* KWChangeMatcher.m in Sources */,
 				4AE0300A1AEB47E600556381 /* KWConformToProtocolMatcher.m in Sources */,
+				D7C3D1421CC4DDA000A0E0AD /* KWProxyBlock.m in Sources */,
 				4AE0300B1AEB47E600556381 /* KWContainMatcher.m in Sources */,
 				4AE0300C1AEB47E600556381 /* KWContainStringMatcher.m in Sources */,
 				4AE0300D1AEB47E600556381 /* KWEqualMatcher.m in Sources */,
@@ -1960,6 +1971,7 @@
 				D775FDB41CC246590081F88E /* KWBlockLayout.m in Sources */,
 				CE87C46B1AF195BE00310C07 /* KWBlockRaiseMatcher.m in Sources */,
 				CE87C46C1AF195BE00310C07 /* KWChangeMatcher.m in Sources */,
+				D7C3D1411CC4DDA000A0E0AD /* KWProxyBlock.m in Sources */,
 				CE87C46D1AF195BE00310C07 /* KWConformToProtocolMatcher.m in Sources */,
 				CE87C46E1AF195BE00310C07 /* KWContainMatcher.m in Sources */,
 				CE87C46F1AF195BE00310C07 /* KWContainStringMatcher.m in Sources */,
