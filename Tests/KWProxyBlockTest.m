@@ -21,11 +21,19 @@ static const CGRect KWRectValue = (CGRect){{1.0, 1.0}, {1.0, 1.0}};
 
 // test typedefs
 typedef void(^__KWVoidBlock)(void);
+typedef void(^__KWVoidBlockMultiparam)(NSUInteger, id, CGRect);
+
 typedef NSUInteger(^__KWPrimitiveBlock)(void);
+
 typedef id(^__KWObjectBlock)(void);
+typedef id(^__KWObjectBlockMultiparam)(NSUInteger, id, CGRect);
+
 typedef CGRect(^__KWStretBlock)(void);
+typedef CGRect(^__KWStretBlockMultiparam)(NSUInteger, id, CGRect);
 
 @interface KWProxyBlockTest : XCTestCase
+
+- (void)assertCorrectParamsWithUInteger:(NSUInteger)intValue object:(id)object structure:(CGRect)rect;
 
 @end
 
@@ -45,7 +53,9 @@ typedef CGRect(^__KWStretBlock)(void);
     [super tearDown];
 }
 
-- (void)testItShouldEvaluateWrappedVoidBlockWithoutParams {
+#pragma mark - Test block without parameters
+
+- (void)testItShouldEvaluateWrappedVoidBlock {
     __KWVoidBlock block = ^{ _evaluated = YES; };
     
     KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
@@ -53,7 +63,7 @@ typedef CGRect(^__KWStretBlock)(void);
     ((__KWVoidBlock)wrappedBlock)();
 }
 
-- (void)testItShouldEvaluateWrappedPrimitiveBlockWithoutParams {
+- (void)testItShouldEvaluateWrappedPrimitiveBlock {
     __KWPrimitiveBlock block = ^{
         _evaluated = YES;
         
@@ -65,7 +75,7 @@ typedef CGRect(^__KWStretBlock)(void);
     XCTAssertEqual(KWUIntValue, ((__KWPrimitiveBlock)wrappedBlock)(), "wrapped block didn't return a proper value");
 }
 
-- (void)testItShouldEvaluateWrappedObjectBlockWithoutParams {
+- (void)testItShouldEvaluateWrappedObjectBlock {
     __KWObjectBlock block = ^{
         _evaluated = YES;
         
@@ -86,7 +96,57 @@ typedef CGRect(^__KWStretBlock)(void);
     
     KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
     
-    XCTAssertTrue(CGRectEqualToRect(KWRectValue, ((__KWStretBlock)wrappedBlock)()), "wrapped block didn't return a proper value");
+    XCTAssertTrue(CGRectEqualToRect(KWRectValue, ((__KWStretBlock)wrappedBlock)()),
+                  "wrapped block didn't return a proper value");
+}
+
+#pragma mark - Test block with parameters
+
+- (void)testItShouldEvaluateWrappedVoidBlockWithMultipleParameters {
+    __KWVoidBlockMultiparam block = ^(NSUInteger intValue, id object, CGRect rect) {
+        [self assertCorrectParamsWithUInteger:intValue object:object structure:rect];
+    };
+    
+    KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
+    
+    ((__KWVoidBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWRectValue);
+}
+
+- (void)testItShouldEvaluateWrappedObjectBlockWithMultipleParameters {
+    __KWObjectBlockMultiparam block = ^(NSUInteger intValue, id object, CGRect rect) {
+        [self assertCorrectParamsWithUInteger:intValue object:object structure:rect];
+        
+        return KWStringValue;
+    };
+    
+    KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
+    
+    id object = ((__KWObjectBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWRectValue);
+    
+    XCTAssertEqualObjects(KWStringValue, object, "wrapped block didn't return a proper value");
+}
+
+- (void)testItShouldEvaluateWrappedStretBlockWithMultipleParameters {
+    __KWStretBlockMultiparam block = ^(NSUInteger intValue, id object, CGRect rect) {
+        [self assertCorrectParamsWithUInteger:intValue object:object structure:rect];
+        
+        return KWRectValue;
+    };
+    
+    KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
+    
+    CGRect rect = ((__KWStretBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWRectValue);
+    
+    XCTAssertTrue(CGRectEqualToRect(KWRectValue, rect), "wrapped block didn't return a proper value");
+}
+
+
+- (void)assertCorrectParamsWithUInteger:(NSUInteger)intValue object:(id)object structure:(CGRect)rect {
+    _evaluated = YES;
+    
+    XCTAssertTrue(CGRectEqualToRect(KWRectValue, rect), "wrapped block didn't return a proper value");
+    XCTAssertEqualObjects(KWStringValue, object, "wrapped block didn't return a proper value");
+    XCTAssertEqual(KWUIntValue, intValue, "wrapped block didn't return a proper value");
 }
 
 @end
