@@ -59,17 +59,16 @@ const char *KWBlockLayoutGetSignature(KWBlockLayout *block) {
 }
 
 NSMethodSignature *KWBlockLayoutGetMethodSignature(KWBlockLayout *block) {
-    const char *UTF8Signature = KWBlockLayoutGetSignature(block);
-    if (!UTF8Signature) {
-        return nil;
-    }
+    // if there is no signature, we consider block to be returning void
+    const char *UTF8Signature = KWBlockLayoutHasSignature(block) ? KWBlockLayoutGetSignature(block) : @encode(void);
     
     NSString *signature = [NSString stringWithFormat: @"%s", UTF8Signature];
-    
-#warning TODO: test the way it is in libclosure-65
     NSMethodSignature *result = [NSMethodSignature signatureWithObjCTypes:signature.UTF8String];
+    
+    // if there are not enough arguments, we append them by adding void *, which is valid for both id and SEL
+    // forwarding expect.
     while (result.numberOfArguments < 2) {
-        signature = [NSString stringWithFormat: @"%@%s", signature, @encode(void *)];
+        signature = [NSString stringWithFormat:@"%@%s", signature, @encode(void *)];
         result = [NSMethodSignature signatureWithObjCTypes:signature.UTF8String];
     }
     
