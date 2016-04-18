@@ -80,6 +80,9 @@ FOUNDATION_EXPORT
 IMP KWBlockLayoutGetImp(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
+uintptr_t KWBlockLayoutGetDescriptorSize(KWBlockLayout *block);
+
+FOUNDATION_EXPORT
 NSMethodSignature *KWBlockLayoutGetSignature(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
@@ -87,3 +90,6 @@ KWBlockDescriptor *KWBlockLayoutGetDescriptor(KWBlockLayout *block);
 
 FOUNDATION_EXPORT
 KWBlockDescriptorMetadata *KWBlockLayoutGetDescriptorMetadata(KWBlockLayout *block);
+
+FOUNDATION_EXPORT
+IMP KWBlockLayoutGetForwardingImp(KWBlockLayout *block);

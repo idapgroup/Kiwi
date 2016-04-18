@@ -6,6 +6,8 @@
 //  Copyright © 2016 Allen Ding. All rights reserved.
 //
 
+#import <objc/message.h>
+
 #include "KWBlockLayout.h"
 
 kKWBlockOptions KWBlockLayoutGetFlags(KWBlockLayout *block) {
@@ -44,18 +46,22 @@ IMP KWBlockLayoutGetImp(KWBlockLayout *block) {
     return block->imp;
 }
 
+uintptr_t KWBlockLayoutGetDescriptorSize(KWBlockLayout *block) {
+    return KWBlockLayoutGetDescriptor(block)->size;
+}
+
 NSMethodSignature *KWBlockLayoutGetSignature(KWBlockLayout *block) {
     if (!KWBlockLayoutHasSignature(block)) {
         return nil;
     }
     
-    NSString *signatureString = [NSString stringWithFormat: @"%s", KWBlockLayoutGetDescriptorMetadata(block)->signature];
+    NSString *signature = [NSString stringWithFormat: @"%s", KWBlockLayoutGetDescriptorMetadata(block)->signature];
     
 #warning TODO: test the way it is in libclosure-65
-    NSMethodSignature *result = [NSMethodSignature signatureWithObjCTypes:signatureString.UTF8String];
+    NSMethodSignature *result = [NSMethodSignature signatureWithObjCTypes:signature.UTF8String];
     while (result.numberOfArguments < 2) {
-        signatureString = [NSString stringWithFormat: @"%@%s", signatureString, @encode(void *)];
-        result = [NSMethodSignature signatureWithObjCTypes:signatureString.UTF8String];
+        signature = [NSString stringWithFormat: @"%@%s", signature, @encode(void *)];
+        result = [NSMethodSignature signatureWithObjCTypes:signature.UTF8String];
     }
     
     return result;
@@ -65,7 +71,6 @@ KWBlockDescriptor *KWBlockLayoutGetDescriptor(KWBlockLayout *block) {
     return block->descriptor;
 }
 
-FOUNDATION_EXPORT
 KWBlockDescriptorMetadata *KWBlockLayoutGetDescriptorMetadata(KWBlockLayout *block) {
     if (!KWBlockLayoutHasSignature(block)) {
         return NULL;
@@ -78,4 +83,9 @@ KWBlockDescriptorMetadata *KWBlockLayoutGetDescriptorMetadata(KWBlockLayout *blo
     }
     
     return (KWBlockDescriptorMetadata *)address;
+}
+
+IMP KWBlockLayoutGetForwardingImp(KWBlockLayout *block) {
+    // explicit type casting for OBJC_OLD_DISPATCH_PROTOTYPES
+    return KWBlockLayoutHasStructureReturn(block) ? (IMP)_objc_msgForward_stret : (IMP)_objc_msgForward;
 }
