@@ -21,6 +21,7 @@
 #pragma mark - Properties
 
 @property (nonatomic, readonly, copy) id block;
+@property (nonatomic, readonly, assign) KWBlockLayout *blockLayout;
 @property (nonatomic, readonly, assign) KWBlockDescriptor *descriptor;
 
 #pragma mark - Methods
@@ -43,6 +44,8 @@
 
 @synthesize block = _block;
 @synthesize descriptor = _descriptor;
+
+@dynamic blockLayout;
 
 #pragma mark - Deallocating
 
@@ -90,5 +93,25 @@
     _imp = KWBlockLayoutGetForwardingImp(block);
 }
 
+- (id)copyWithZone:(nullable NSZone *)zone {
+    return self;
+}
+
+#pragma mark - Properties
+
+- (KWBlockLayout *)blockLayout {
+    return (__bridge KWBlockLayout *)(self.block);
+}
+
+#pragma mark - Forwarding
+
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
+    return KWBlockLayoutGetMethodSignature(self.blockLayout);
+}
+
+- (void)forwardInvocation:(NSInvocation *)invocation {
+    [invocation setTarget:self.block];
+    [invocation invokeUsingIMP:KWBlockLayoutGetImp(self.blockLayout)];
+}
 
 @end

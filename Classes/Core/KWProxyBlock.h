@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface KWProxyBlock : NSObject
+@interface KWProxyBlock : NSObject <NSCopying>
 
 + (id)blockWithBlock:(id)block;
 
