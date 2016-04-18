@@ -6,7 +6,7 @@
 //  Copyright © 2016 Allen Ding. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <Foundation/NSObject.h>
 
 @interface KWProxyBlock : NSObject <NSCopying>
 

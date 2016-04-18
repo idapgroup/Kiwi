@@ -523,6 +523,8 @@
 		D7C3D1401CC4DDA000A0E0AD /* KWProxyBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = D7C3D13D1CC4DDA000A0E0AD /* KWProxyBlock.h */; };
 		D7C3D1411CC4DDA000A0E0AD /* KWProxyBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C3D13E1CC4DDA000A0E0AD /* KWProxyBlock.m */; };
 		D7C3D1421CC4DDA000A0E0AD /* KWProxyBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C3D13E1CC4DDA000A0E0AD /* KWProxyBlock.m */; };
+		D7C3D1441CC4E7C000A0E0AD /* KWProxyBlockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C3D1431CC4E7C000A0E0AD /* KWProxyBlockTest.m */; };
+		D7C3D1451CC4E7C000A0E0AD /* KWProxyBlockTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C3D1431CC4E7C000A0E0AD /* KWProxyBlockTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -821,6 +823,7 @@
 		D775FDB31CC246590081F88E /* KWBlockLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockLayout.h; sourceTree = "<group>"; };
 		D7C3D13D1CC4DDA000A0E0AD /* KWProxyBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWProxyBlock.h; sourceTree = "<group>"; };
 		D7C3D13E1CC4DDA000A0E0AD /* KWProxyBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWProxyBlock.m; sourceTree = "<group>"; };
+		D7C3D1431CC4E7C000A0E0AD /* KWProxyBlockTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWProxyBlockTest.m; sourceTree = "<group>"; };
 		DA084D3F17E3804200592D5A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DA084D4217E3804200592D5A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		DA3EAD0718A7A1D700EBBF57 /* KWSharedExampleFunctionalTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWSharedExampleFunctionalTest.m; sourceTree = "<group>"; };
@@ -1322,6 +1325,7 @@
 				89861D9316FE0EE5008CE99D /* KWFormatterTest.m */,
 				F55E61CD119B74D600F30B42 /* KWMessagePatternTest.m */,
 				DAAC61CA17E75B50000165F6 /* KWObjCUtilitiesTest.m */,
+				D7C3D1431CC4E7C000A0E0AD /* KWProxyBlockTest.m */,
 				F5FC83B511B100B100BF98A2 /* KWStringUtilitiesTest.m */,
 				F5C6FD2311782A290068BBC8 /* KWValueTest.m */,
 				DA9C69F7190CA6EE002C4DC0 /* NSNumber_KiwiAdditionsTests.m */,
@@ -1901,6 +1905,7 @@
 				4AE030B91AEB494400556381 /* TestSpy.m in Sources */,
 				4AE030BA1AEB494400556381 /* TestVerifier.m in Sources */,
 				4AE030BB1AEB494400556381 /* KWBlockNodeTest.m in Sources */,
+				D7C3D1451CC4E7C000A0E0AD /* KWProxyBlockTest.m in Sources */,
 				4AE030BC1AEB494400556381 /* KWContextNodeTest.m in Sources */,
 				4AE030BD1AEB494400556381 /* KWExampleSuiteBuilderTest.m in Sources */,
 				4AE030BE1AEB494400556381 /* KWExampleSuiteTest.m in Sources */,
@@ -2067,6 +2072,7 @@
 				CE87C5211AF1994200310C07 /* TestVerifier.m in Sources */,
 				CE87C5221AF1994200310C07 /* KWBlockNodeTest.m in Sources */,
 				CE87C5231AF1994200310C07 /* KWContextNodeTest.m in Sources */,
+				D7C3D1441CC4E7C000A0E0AD /* KWProxyBlockTest.m in Sources */,
 				CE87C5241AF1994200310C07 /* KWExampleSuiteBuilderTest.m in Sources */,
 				CE87C5251AF1994200310C07 /* KWExampleSuiteTest.m in Sources */,
 				CE87C5261AF1994200310C07 /* KWExampleTest.m in Sources */,

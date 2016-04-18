@@ -38,7 +38,7 @@
     IMP _imp;
     KWBlockDescriptor *_descriptor;
     
-    // ivars related to our class, rather, than to the block
+    // ivars related to our class, rather, than to the interposed block
     id _block;
 }
 
@@ -85,10 +85,7 @@
     _descriptor = calloc(1, interposeSize);
     
     KWBlockDescriptor *descriptor = KWBlockLayoutGetDescriptor(block);
-    memcpy(&_descriptor, descriptor, interposeSize);
-    
-    KWBlockDescriptorMetadata *descriptorMetadata = KWBlockLayoutGetDescriptorMetadata((__bridge KWBlockLayout *)self);
-    descriptorMetadata->signature = KWBlockLayoutGetSignature(block);
+    memcpy(_descriptor, descriptor, interposeSize);
     
     _imp = KWBlockLayoutGetForwardingImp(block);
 }
