@@ -11,6 +11,7 @@
 #include "KWBlockLayout.h"
 
 kKWBlockOptions KWBlockLayoutGetFlags(KWBlockLayout *block) {
+    // refcount is unneeded, as wel, as deallocating, so we filter them out from the flags
     return block->flags & ~(kKWBlockRefcountMask | kKWBlockDeallocating);
 }
 
@@ -31,6 +32,7 @@ BOOL KWBlockLayoutIsGlobal(KWBlockLayout *block) {
 }
 
 BOOL KWBlockLayoutHasStructureReturn(KWBlockLayout *block) {
+    // block only has structure return, when it has signature
     return KWBlockLayoutGetOption(block, kKWBlockHasStructureReturn) && KWBlockLayoutHasSignature(block);
 }
 
@@ -65,8 +67,8 @@ NSMethodSignature *KWBlockLayoutGetMethodSignature(KWBlockLayout *block) {
     NSString *signature = [NSString stringWithFormat: @"%s", UTF8Signature];
     NSMethodSignature *result = [NSMethodSignature signatureWithObjCTypes:signature.UTF8String];
     
-    // if there are not enough arguments, we append them by adding void *, which is valid for both id and SEL
-    // forwarding expect.
+    // If there are not enough arguments, we append them by adding void *, which is valid for both id and SEL
+    // Forwarding expects the ObjC signature return(self, _cmd)
     while (result.numberOfArguments < 2) {
         signature = [NSString stringWithFormat:@"%@%s", signature, @encode(void *)];
         result = [NSMethodSignature signatureWithObjCTypes:signature.UTF8String];
@@ -80,10 +82,16 @@ KWBlockDescriptor *KWBlockLayoutGetDescriptor(KWBlockLayout *block) {
 }
 
 KWBlockDescriptorMetadata *KWBlockLayoutGetDescriptorMetadata(KWBlockLayout *block) {
+    // signature is only available, if the appropriate flag is set
     if (!KWBlockLayoutHasSignature(block)) {
         return NULL;
     }
-    
+
+    // _Block_descriptor_3: http://opensource.apple.com//source/libclosure/libclosure-65/runtime.c
+    // It's layed out from descriptor pointer inside KWBlockLayout in the following way:
+    // - KWBlockDescriptor
+    // - KWBlockDescriptorCopyDispose - if kKWBlockHasCopyDispose flag is set, otherwise it's not there
+    // - KWBlockDescriptorMetadata
     uint8_t *address = (uint8_t *)KWBlockLayoutGetDescriptor(block);
     address += sizeof(KWBlockDescriptor);
     if (KWBlockLayoutHasCopyDispose(block)) {

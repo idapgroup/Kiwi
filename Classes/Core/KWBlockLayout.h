@@ -8,7 +8,9 @@
 
 #import "KiwiConfiguration.h"
 
-// Block types and helper methods derived from http://opensource.apple.com//source/libclosure/libclosure-65/Block_private.h
+// Block types and helper methods derived from
+// http://opensource.apple.com//source/libclosure/libclosure-65/Block_private.h
+// http://opensource.apple.com//source/libclosure/libclosure-65/runtime.c
 
 typedef enum {
     kKWBlockDeallocating        = (0x0001),  // runtime
