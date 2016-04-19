@@ -9,6 +9,9 @@
 #import "KWProxyBlock.h"
 
 #import "KWBlockLayout.h"
+#import "KWBlockMessagePattern.h"
+
+#import "NSObject+KiwiStubAdditions.h"
 
 @interface NSInvocation (KWPrivateInterface)
 
@@ -23,6 +26,9 @@
 @property (nonatomic, readonly, copy) id block;
 @property (nonatomic, readonly, assign) KWBlockLayout *blockLayout;
 @property (nonatomic, readonly, assign) KWBlockDescriptor *descriptor;
+
+@property (nonatomic, readonly) NSMutableSet *expectedMessagePatterns;
+@property (nonatomic, readonly) NSMapTable *messageSpies;
 
 #pragma mark - Methods
 
@@ -59,6 +65,9 @@
 - (id)initWithBlock:(id)block {
     self = [super init];
     if (self) {
+        _expectedMessagePatterns = [NSMutableSet new];
+        _messageSpies = [NSMapTable mapTableWithKeyOptions:NSMapTableStrongMemory valueOptions:NSMapTableStrongMemory];
+        
         _block = [block copy];
         [self interposeBlock:_block];
     }
@@ -109,6 +118,32 @@
 - (void)forwardInvocation:(NSInvocation *)invocation {
     [invocation setTarget:self.block];
     [invocation invokeUsingIMP:KWBlockLayoutGetImp(self.blockLayout)];
+}
+
+- (void)addMessageSpy:(id<KWMessageSpying>)aSpy forMessagePattern:(KWMessagePattern *)aMessagePattern {
+    if (![aMessagePattern isKindOfClass:[KWBlockMessagePattern class]]) {
+        [super addMessageSpy:aSpy forMessagePattern:aMessagePattern];
+    }
+    
+    [self.expectedMessagePatterns addObject:aMessagePattern];
+    NSMutableArray *messagePatternSpies = [self.messageSpies objectForKey:aMessagePattern];
+    
+    if (messagePatternSpies == nil) {
+        messagePatternSpies = [[NSMutableArray alloc] init];
+        [self.messageSpies setObject:messagePatternSpies forKey:aMessagePattern];
+    }
+    
+    if (![messagePatternSpies containsObject:aSpy])
+        [messagePatternSpies addObject:aSpy];
+}
+
+- (void)removeMessageSpy:(id<KWMessageSpying>)aSpy forMessagePattern:(KWMessagePattern *)aMessagePattern {
+    if (![aMessagePattern isKindOfClass:[KWBlockMessagePattern class]]) {
+        [super removeMessageSpy:aSpy forMessagePattern:aMessagePattern];
+    }
+    
+    NSMutableArray *messagePatternSpies = [self.messageSpies objectForKey:aMessagePattern];
+    [messagePatternSpies removeObject:aSpy];
 }
 
 @end
