@@ -36,6 +36,8 @@ extern "C" {
 #import <Kiwi/KWBeforeAllNode.h>
 #import <Kiwi/KWBeforeEachNode.h>
 #import <Kiwi/KWBlock.h>
+#import <Kiwi/KWBlockLayout.h>
+#import <Kiwi/KWProxyBlock.h>
 #import <Kiwi/KWBlockNode.h>
 #import <Kiwi/KWBlockRaiseMatcher.h>
 #import <Kiwi/KWCallSite.h>
