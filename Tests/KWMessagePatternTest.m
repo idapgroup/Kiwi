@@ -11,16 +11,30 @@
 
 #if KW_TESTS_ENABLED
 
-@interface KWMessagePatternTest : XCTestCase
+@interface KWMessagePatternAbstractTest : XCTestCase
+// override message pattern class to perform testing
+@property (nonatomic, readonly) Class messagePatternClass;
 
 @end
 
-@implementation KWMessagePatternTest
+@implementation KWMessagePatternAbstractTest
+
+@dynamic messagePatternClass;
+
+- (Class)messagePatternClass {
+    return nil;
+}
+
+- (void)performTest:(XCTestRun *)run {
+    if (![self isMemberOfClass:[KWMessagePatternAbstractTest class]]) {
+        [super performTest:run];
+    }
+}
 
 - (KWMessagePattern *)messagePatternWithSelector:(SEL)aSelector arguments:(id)firstArgument, ... {
     va_list argumentList;
     va_start(argumentList, firstArgument);
-    return [KWMessagePattern messagePatternWithSelector:aSelector firstArgumentFilter:firstArgument argumentList:argumentList];
+    return [self.messagePatternClass messagePatternWithSelector:aSelector firstArgumentFilter:firstArgument argumentList:argumentList];
 }
 
 - (void)testItShouldCreateMessagePatternsWithVarArgs {
@@ -84,7 +98,7 @@
     void *creationInvocationContext = nil;
     [creationInvocation setMessageArguments:&creationInvocationObserver, &creationInvocationKeyPath, &creationInvocationOptions, &creationInvocationContext];
     [creationInvocation setSelector:@selector(addObserver:forKeyPath:options:context:)];
-    KWMessagePattern *messagePattern = [KWMessagePattern messagePatternFromInvocation:creationInvocation];
+    KWMessagePattern *messagePattern = [self.messagePatternClass messagePatternFromInvocation:creationInvocation];
 
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     [invocation setSelector:@selector(addObserver:forKeyPath:options:context:)];
@@ -105,7 +119,7 @@
     void *creationInvocationContext = nil;
     [creationInvocation setMessageArguments:&creationInvocationObserver, &creationInvocationKeyPath, &creationInvocationOptions, &creationInvocationContext];
     [creationInvocation setSelector:@selector(addObserver:forKeyPath:options:context:)];
-    KWMessagePattern *messagePattern = [KWMessagePattern messagePatternFromInvocation:creationInvocation];
+    KWMessagePattern *messagePattern = [self.messagePatternClass messagePatternFromInvocation:creationInvocation];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     [invocation setSelector:@selector(addObserver:forKeyPath:options:context:)];
     id observer = @"foo";
@@ -124,7 +138,7 @@
 	id creationInvocationHandler = [KWAny any];
 	[creationInvocation setMessageArguments:&creationInvocationMessage, &creationInvocationTimeInterval, &creationInvocationHandler];
 	[creationInvocation setSelector:@selector(speak:afterDelay:whenDone:)];
-	KWMessagePattern *messagePattern = [KWMessagePattern messagePatternFromInvocation:creationInvocation];
+	KWMessagePattern *messagePattern = [self.messagePatternClass messagePatternFromInvocation:creationInvocation];
 	NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
 	[invocation setSelector:@selector(speak:afterDelay:whenDone:)];
 	id message = @"Hello World";
@@ -167,14 +181,39 @@
 }
 
 - (void)testItShouldCompareMessagePatternsWithNilAndNonNilArgumentFilters {
-    KWMessagePattern *messagePattern1 = [KWMessagePattern messagePatternWithSelector:@selector(setYear:)];
+    KWMessagePattern *messagePattern1 = [self.messagePatternClass messagePatternWithSelector:@selector(setYear:)];
     NSArray *argumentFilters = @[[KWValue valueWithUnsignedInt:42]];
-    KWMessagePattern *messagePattern2 = [KWMessagePattern messagePatternWithSelector:@selector(setYear:) argumentFilters:argumentFilters];
+    KWMessagePattern *messagePattern2 = [self.messagePatternClass messagePatternWithSelector:@selector(setYear:) argumentFilters:argumentFilters];
 
     XCTAssertFalse([messagePattern1 isEqual:messagePattern2], @"expected message patterns to compare as not equal");
     XCTAssertFalse([messagePattern2 isEqual:messagePattern1], @"expected message patterns to compare as not equal");
 }
 
 @end
+
+@interface KWMessagePatternTest : KWMessagePatternAbstractTest
+
+@end
+
+@implementation KWMessagePatternTest
+
+- (Class)messagePatternClass {
+    return [KWMessagePattern class];
+}
+
+@end
+
+@interface KWBlockMessagePatternTest : KWMessagePatternAbstractTest
+
+@end
+
+@implementation KWBlockMessagePatternTest
+
+- (Class)messagePatternClass {
+    return [KWBlockMessagePattern class];
+}
+
+@end
+
 
 #endif // #if KW_TESTS_ENABLED
