@@ -30,7 +30,7 @@
     return [super messagePatternWithSelector:NULL];
 }
 
-+ (id)messagePatternArgumentFilters:(NSArray *)anArray {
++ (id)messagePatternWithArgumentFilters:(NSArray *)anArray {
     return [super messagePatternWithSelector:NULL argumentFilters:anArray];
 }
 

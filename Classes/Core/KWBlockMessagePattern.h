@@ -6,7 +6,7 @@
 //  Copyright © 2016 Allen Ding. All rights reserved.
 //
 
-#import <Kiwi/KWMessagePattern.h>
+#import "KWMessagePattern.h"
 
 // Block signature doesn't have a selector as the second hidden argument, so block message pattern has selector = NULL
 
