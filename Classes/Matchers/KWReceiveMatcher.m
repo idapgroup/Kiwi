@@ -21,24 +21,9 @@ static NSString * const StubValueKey = @"StubValueKey";
 
 @interface KWReceiveMatcher()
 
-#pragma mark - Properties
-
-@property (nonatomic, readwrite, strong) KWMessageTracker *messageTracker;
-
 @end
 
 @implementation KWReceiveMatcher
-
-#pragma mark - Initializing
-
-- (id)initWithSubject:(id)anObject {
-    self = [super initWithSubject:anObject];
-    if (self) {
-        _willEvaluateMultipleTimes = NO;
-    }
-    
-    return self;
-}
 
 #pragma mark - Getting Matcher Strings
 
@@ -55,36 +40,6 @@ static NSString * const StubValueKey = @"StubValueKey";
                                      @"receiveMessagePattern:andReturn:countType:count:",
                                      @"receiveUnspecifiedCountOfMessagePattern:",
                                      @"receiveUnspecifiedCountOfMessagePattern:andReturn:"];
-}
-
-#pragma mark - Matching
-
-- (BOOL)shouldBeEvaluatedAtEndOfExample {
-    return YES;
-}
-
-- (BOOL)evaluate {
-    BOOL succeeded = [self.messageTracker succeeded];
-
-    if (!self.willEvaluateMultipleTimes) {
-      [self.messageTracker stopTracking];
-    }
-    return succeeded;
-}
-
-#pragma mark - Getting Failure Messages
-
-- (NSString *)failureMessageForShould {
-    return [NSString stringWithFormat:@"expected subject to receive -%@ %@, but received it %@",
-                                      [self.messageTracker.messagePattern stringValue],
-                                      [self.messageTracker expectedCountPhrase],
-                                      [self.messageTracker receivedCountPhrase]];
-}
-
-- (NSString *)failureMessageForShouldNot {
-    return [NSString stringWithFormat:@"expected subject not to receive -%@, but received it %@",
-                                      [self.messageTracker.messagePattern stringValue],
-                                      [self.messageTracker receivedCountPhrase]];
 }
 
 #pragma mark - Configuring Matchers
@@ -281,6 +236,8 @@ static NSString * const StubValueKey = @"StubValueKey";
         StubValueKey:     aValue
     };
 }
+
+#warning verifier creation
 
 - (id)receive {
     NSDictionary *userInfo = [self userInfoForReceiveMatcherWithCountType:KWCountTypeExact count:1];
