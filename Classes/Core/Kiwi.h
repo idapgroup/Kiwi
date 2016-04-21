@@ -83,6 +83,7 @@ extern "C" {
 #import <Kiwi/KWPendingNode.h>
 #import <Kiwi/KWProbe.h>
 #import <Kiwi/KWReceiveMatcher.h>
+#import <Kiwi/KWBeEvaluatedMatcher.h>    
 #import <Kiwi/KWRegisterMatchersNode.h>
 #import <Kiwi/KWRegularExpressionPatternMatcher.h>
 #import <Kiwi/KWReporting.h>

@@ -10,4 +10,14 @@
 
 @interface KWBeEvaluatedMatcher : KWMessageTrackerMatcher
 
+- (void)beEvaluated;
+- (void)beEvaluatedWithCount:(NSUInteger)aCount;
+- (void)beEvaluatedWithCountAtLeast:(NSUInteger)aCount;
+- (void)beEvaluatedWithCountAtMost:(NSUInteger)aCount;
+
+- (void)beEvaluatedWithArguments:(id)firstArgument, ...;
+- (void)beEvaluatedWithCount:(NSUInteger)aCount arguments:(id)firstArgument, ...;
+- (void)beEvaluatedWithCountAtLeast:(NSUInteger)aCount arguments:(id)firstArgument, ...;
+- (void)beEvaluatedWithCountAtMost:(NSUInteger)aCount arguments:(id)firstArgument, ...;
+
 @end

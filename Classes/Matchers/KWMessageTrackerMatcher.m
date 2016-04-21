@@ -11,6 +11,12 @@
 #import "KWMessageTracker.h"
 #import "KWMessagePattern.h"
 
+@interface KWMessageTrackerMatcher ()
+
+@property (nonatomic, strong) KWMessageTracker *messageTracker;
+
+@end
+
 @implementation KWMessageTrackerMatcher
 
 #pragma mark - Initializing
@@ -52,6 +58,15 @@
     return [NSString stringWithFormat:@"expected subject not to receive -%@, but received it %@",
             [self.messageTracker.messagePattern stringValue],
             [self.messageTracker receivedCountPhrase]];
+}
+
+#pragma mark - Setting Message Tracker
+
+- (void)setMessageTrackerWithMessagePattern:(KWMessagePattern *)aMessagePattern
+                                  countType:(KWCountType)aCountType
+                                      count:(NSUInteger)aCount
+{
+    self.messageTracker = [KWMessageTracker messageTrackerWithSubject:self.subject messagePattern:aMessagePattern countType:aCountType count:aCount];
 }
 
 @end

@@ -105,8 +105,8 @@ static NSString * const StubValueKey = @"StubValueKey";
     @try {
 #endif // #if KW_TARGET_HAS_INVOCATION_EXCEPTION_BUG
 
-    [self.subject stubMessagePattern:aMessagePattern andReturn:nil overrideExisting:NO];
-    self.messageTracker = [KWMessageTracker messageTrackerWithSubject:self.subject messagePattern:aMessagePattern countType:aCountType count:aCount];
+     [self.subject stubMessagePattern:aMessagePattern andReturn:nil overrideExisting:NO];
+     [self setMessageTrackerWithMessagePattern:aMessagePattern countType:aCountType count:aCount];
 
 #if KW_TARGET_HAS_INVOCATION_EXCEPTION_BUG
     } @catch(NSException *exception) {
@@ -121,7 +121,7 @@ static NSString * const StubValueKey = @"StubValueKey";
 #endif // #if KW_TARGET_HAS_INVOCATION_EXCEPTION_BUG
 
     [self.subject stubMessagePattern:aMessagePattern andReturn:aValue];
-    self.messageTracker = [KWMessageTracker messageTrackerWithSubject:self.subject messagePattern:aMessagePattern countType:aCountType count:aCount];
+    [self setMessageTrackerWithMessagePattern:aMessagePattern countType:aCountType count:aCount];
 
 #if KW_TARGET_HAS_INVOCATION_EXCEPTION_BUG
     } @catch(NSException *exception) {
