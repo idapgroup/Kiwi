@@ -213,6 +213,18 @@
     return [KWBlockMessagePattern class];
 }
 
+- (void)testItShouldHaveNullSelector {
+#define KWTestMessagePatternSelector(messagePattern) XCTAssertEqual([messagePattern selector], NULL)
+
+    KWTestMessagePatternSelector([[self.messagePatternClass alloc] init]);
+    KWTestMessagePatternSelector([[self.messagePatternClass alloc] initWithArgumentFilters:nil]);
+    KWTestMessagePatternSelector([self messagePatternWithSelector:@selector(loadView) arguments:nil]);
+    KWTestMessagePatternSelector([self.messagePatternClass messagePattern]);
+    KWTestMessagePatternSelector([self.messagePatternClass messagePatternWithArgumentFilters:nil]);
+    
+#undef KWTestMessagePatternSelector
+}
+
 @end
 
 
