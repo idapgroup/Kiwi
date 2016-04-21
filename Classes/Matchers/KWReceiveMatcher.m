@@ -237,8 +237,6 @@ static NSString * const StubValueKey = @"StubValueKey";
     };
 }
 
-#warning verifier creation
-
 - (id)receive {
     NSDictionary *userInfo = [self userInfoForReceiveMatcherWithCountType:KWCountTypeExact count:1];
     return [KWInvocationCapturer invocationCapturerWithDelegate:[KWReceiveMatcher class] userInfo:userInfo];

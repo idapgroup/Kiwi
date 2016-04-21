@@ -6,13 +6,13 @@
 
 #import "KiwiConfiguration.h"
 #import "KWCountType.h"
-#import "KWMessageMatcher.h"
+#import "KWMessageTrackerMatcher.h"
 #import "KWMatchVerifier.h"
 
 @class KWMessagePattern;
 @class KWMessageTracker;
 
-@interface KWReceiveMatcher : KWMessageMatcher
+@interface KWReceiveMatcher : KWMessageTrackerMatcher
 
 #pragma mark - Configuring Matchers
 

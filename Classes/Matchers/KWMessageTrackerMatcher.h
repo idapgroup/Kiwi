@@ -1,5 +1,5 @@
 //
-//  KWMessageMatcher.h
+//  KWMessageTrackerMatcher.h
 //  Kiwi
 //
 //  Created by Oleksa 'trimm' Korin on 4/20/16.
@@ -10,7 +10,7 @@
 
 @class KWMessageTracker;
 
-@interface KWMessageMatcher : KWMatcher
+@interface KWMessageTrackerMatcher : KWMatcher
 
 #pragma mark - Properties
 

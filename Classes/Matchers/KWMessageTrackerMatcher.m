@@ -1,17 +1,17 @@
 //
-//  KWMessageMatcher.m
+//  KWMessageTrackerMatcher.m
 //  Kiwi
 //
 //  Created by Oleksa 'trimm' Korin on 4/20/16.
 //  Copyright © 2016 Allen Ding. All rights reserved.
 //
 
-#import "KWMessageMatcher.h"
+#import "KWMessageTrackerMatcher.h"
 
 #import "KWMessageTracker.h"
 #import "KWMessagePattern.h"
 
-@implementation KWMessageMatcher
+@implementation KWMessageTrackerMatcher
 
 #pragma mark - Initializing
 
