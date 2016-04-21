@@ -10,6 +10,7 @@
 
 #import "KWBlockLayout.h"
 #import "KWBlockMessagePattern.h"
+#import "KWMessageSpying.h"
 
 #import "NSObject+KiwiStubAdditions.h"
 
@@ -115,9 +116,20 @@
     return KWBlockLayoutGetMethodSignature(self.blockLayout);
 }
 
-- (void)forwardInvocation:(NSInvocation *)invocation {
-    [invocation setTarget:self.block];
-    [invocation invokeUsingIMP:KWBlockLayoutGetImp(self.blockLayout)];
+- (void)forwardInvocation:(NSInvocation *)anInvocation {
+    NSMapTable *spiesMap = self.messageSpies;
+    for (KWBlockMessagePattern *messagePattern in spiesMap) {
+        if ([messagePattern matchesInvocation:anInvocation]) {
+            NSArray *spies = [spiesMap objectForKey:messagePattern];
+            
+            for (id<KWMessageSpying> spy in spies) {
+                [spy object:self didReceiveInvocation:anInvocation];
+            }
+        }
+    }
+    
+    [anInvocation setTarget:self.block];
+    [anInvocation invokeUsingIMP:KWBlockLayoutGetImp(self.blockLayout)];
 }
 
 - (void)addMessageSpy:(id<KWMessageSpying>)aSpy forMessagePattern:(KWMessagePattern *)aMessagePattern {

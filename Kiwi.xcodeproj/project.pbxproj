@@ -519,10 +519,12 @@
 		D737DEAA1CC7D9A20049D07D /* KWMessageTrackerMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D737DEA71CC7D9A20049D07D /* KWMessageTrackerMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D737DEAB1CC7D9A20049D07D /* KWMessageTrackerMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D737DEA81CC7D9A20049D07D /* KWMessageTrackerMatcher.m */; };
 		D737DEAC1CC7D9A20049D07D /* KWMessageTrackerMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D737DEA81CC7D9A20049D07D /* KWMessageTrackerMatcher.m */; };
-		D737DEAF1CC7DEF00049D07D /* KWBeEvaluatedMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D737DEAD1CC7DEF00049D07D /* KWBeEvaluatedMatcher.h */; };
-		D737DEB01CC7DEF00049D07D /* KWBeEvaluatedMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D737DEAD1CC7DEF00049D07D /* KWBeEvaluatedMatcher.h */; };
+		D737DEAF1CC7DEF00049D07D /* KWBeEvaluatedMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D737DEAD1CC7DEF00049D07D /* KWBeEvaluatedMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D737DEB01CC7DEF00049D07D /* KWBeEvaluatedMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D737DEAD1CC7DEF00049D07D /* KWBeEvaluatedMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D737DEB11CC7DEF00049D07D /* KWBeEvaluatedMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D737DEAE1CC7DEF00049D07D /* KWBeEvaluatedMatcher.m */; };
 		D737DEB21CC7DEF00049D07D /* KWBeEvaluatedMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D737DEAE1CC7DEF00049D07D /* KWBeEvaluatedMatcher.m */; };
+		D73A29951CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A29941CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m */; };
+		D73A29961CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D73A29941CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m */; };
 		D775FDB41CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB51CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB61CC246590081F88E /* KWBlockLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = D775FDB31CC246590081F88E /* KWBlockLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -835,6 +837,7 @@
 		D737DEA81CC7D9A20049D07D /* KWMessageTrackerMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWMessageTrackerMatcher.m; sourceTree = "<group>"; };
 		D737DEAD1CC7DEF00049D07D /* KWBeEvaluatedMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBeEvaluatedMatcher.h; sourceTree = "<group>"; };
 		D737DEAE1CC7DEF00049D07D /* KWBeEvaluatedMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBeEvaluatedMatcher.m; sourceTree = "<group>"; };
+		D73A29941CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBeEvaluatedMatcherTest.m; sourceTree = "<group>"; };
 		D775FDB21CC246590081F88E /* KWBlockLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockLayout.m; sourceTree = "<group>"; };
 		D775FDB31CC246590081F88E /* KWBlockLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockLayout.h; sourceTree = "<group>"; };
 		D7A2CE751CC67D9C00AB351F /* KWBlockMessagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockMessagePattern.h; sourceTree = "<group>"; };
@@ -1380,6 +1383,7 @@
 				A352E9E712EDC30A0049C691 /* KWHaveValueMatcherTest.m */,
 				F553B29D11755A00004FCA2E /* KWInequalityMatcherTest.m */,
 				F5C36E91115C9F0700425FDA /* KWReceiveMatcherTest.m */,
+				D73A29941CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m */,
 				4E3C5DB71716C68000835B62 /* KWRegularExpressionPatternMatcherTest.m */,
 				F553B6641175D48C004FCA2E /* KWRespondToSelectorMatcherTest.m */,
 				A385CAE713AA7EA200DCA951 /* KWUserDefinedMatcherTest.m */,
@@ -1919,6 +1923,7 @@
 				4AE030A71AEB494400556381 /* KWMockTest.m in Sources */,
 				4AE030A81AEB494400556381 /* KWRealObjectSpyTest.m in Sources */,
 				4AE030A91AEB494400556381 /* KWRealObjectStubTest.m in Sources */,
+				D73A29961CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m in Sources */,
 				4AE030AA1AEB494400556381 /* KWStubTest.m in Sources */,
 				4AE030AB1AEB494400556381 /* KWCaptureTest.m in Sources */,
 				4AE030AC1AEB494400556381 /* KWSharedExampleRegistryTest.m in Sources */,
@@ -2089,6 +2094,7 @@
 				CE87C50D1AF1994100310C07 /* KWRealObjectSpyTest.m in Sources */,
 				CE87C50E1AF1994200310C07 /* KWRealObjectStubTest.m in Sources */,
 				CE87C50F1AF1994200310C07 /* KWStubTest.m in Sources */,
+				D73A29951CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m in Sources */,
 				CE87C5101AF1994200310C07 /* KWCaptureTest.m in Sources */,
 				CE87C5111AF1994200310C07 /* KWSharedExampleRegistryTest.m in Sources */,
 				CE87C5121AF1994200310C07 /* KWSharedExampleTest.m in Sources */,
