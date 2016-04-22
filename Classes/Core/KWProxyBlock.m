@@ -159,3 +159,11 @@
 }
 
 @end
+
+KWProxyBlock *theBlockProxy(id block) {
+    return [KWProxyBlock blockWithBlock:block];
+}
+
+KWProxyBlock *lambdaProxy(id block) {
+    return theBlockProxy(block);
+}

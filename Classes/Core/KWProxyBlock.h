@@ -10,8 +10,18 @@
 
 @interface KWProxyBlock : NSObject <NSCopying>
 
+#pragma mark - Initializing
+
 + (id)blockWithBlock:(id)block;
 
 - (id)initWithBlock:(id)block;
 
 @end
+
+#pragma mark - Creating Blocks
+
+FOUNDATION_EXPORT
+KWProxyBlock *theBlockProxy(id);
+
+FOUNDATION_EXPORT
+KWProxyBlock *lambdaProxy(id);
