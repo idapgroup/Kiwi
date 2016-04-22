@@ -12,10 +12,11 @@
 
 #if KW_TESTS_ENABLED
 
-typedef void(^KWVoidBlock)(void);
+typedef void(^KWTestBlock)(id);
 
 @interface KWBeEvaluatedMatcherTest : XCTestCase
 @property (nonatomic, strong) id subject;
+@property (nonatomic, strong) id parameter;
 @property (nonatomic, readonly) KWBeEvaluatedMatcher *matcher;
 @property (nonatomic, readonly) KWBeEvaluatedMatcher *negativeExpecationMatcher;
 
@@ -29,8 +30,10 @@ typedef void(^KWVoidBlock)(void);
 - (void)setUp {
     [super setUp];
     
-    Class class = [self class];
-    id subject = [KWProxyBlock blockWithBlock:^{ [class description]; }];
+    self.parameter = [NSObject new];
+    
+    id subject = [KWProxyBlock blockWithBlock:^(id object) { [object description]; }];
+
     self.subject = subject;
 }
 
@@ -49,7 +52,7 @@ typedef void(^KWVoidBlock)(void);
     id subject = self.subject;
     
     if (subject) {
-        ((KWVoidBlock)subject)();
+        ((KWTestBlock)subject)(self.parameter);
     }
 }
 
@@ -74,6 +77,8 @@ typedef void(^KWVoidBlock)(void);
                           [expectedStrings sortedArrayUsingSelector:@selector(compare:)],
                           @"expected specific matcher strings");
 }
+
+#pragma mark - beEvaluated testing
 
 - (void)testItShouldMatchEvaluationsForBeEvaluated {
     KWBeEvaluatedMatcher *matcher = self.matcher;
@@ -159,6 +164,98 @@ typedef void(^KWVoidBlock)(void);
     KWBeEvaluatedMatcher *matcher = self.matcher;
     
     [matcher beEvaluatedWithCountAtMost:2];
+    
+    [self callSubjectWithCount:3];
+    
+    XCTAssertFalse([matcher evaluate], @"expected negative match");
+}
+
+#pragma mark - beEvaluatedWithParameters
+
+- (void)testItShouldMatchEvaluationsAndParametersForBeEvaluated {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithArguments:self.parameter];
+    
+    [self callSubject];
+    
+    XCTAssertTrue([matcher evaluate], @"expected positive match");
+}
+
+- (void)testItShouldMatchMultipleEvaluationsAndParametersForBeEvaluatedWhenAttachedToNegativeVerifier {
+    KWBeEvaluatedMatcher *matcher = self.negativeExpecationMatcher;
+    [matcher beEvaluatedWithArguments:self.parameter];
+    
+    [self callSubjectWithCount:2];
+    
+    XCTAssertTrue([matcher evaluate], @"expected positive match");
+}
+
+- (void)testItShouldNotMatchMultipleEvaluationsAndParametersForBeEvaluatedWhenNotAttachedToNegativeVerifier {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithArguments:self.parameter];
+    [matcher beEvaluatedWithArguments:self.parameter];
+    
+    [self callSubjectWithCount:2];
+    
+    XCTAssertFalse([matcher evaluate], @"expected negative match");
+}
+
+- (void)testItShouldMatchEvaluationsAndParametersForBeEvaluatedWithCount {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithCount:2 arguments:self.parameter];
+    
+    [self callSubjectWithCount:2];
+    
+    XCTAssertTrue([matcher evaluate], @"expected positive match");
+}
+
+- (void)testItShouldNotMatchEvaluationsAndParametersForBeEvaluatedWithInappropriateCount {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithCount:2 arguments:self.parameter];
+    
+    [self callSubjectWithCount:3];
+    
+    XCTAssertFalse([matcher evaluate], @"expected negative match");
+}
+
+- (void)testItShouldMatchEvaluationsAndParametersForBeEvaluatedWithCountAtLeast {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithCountAtLeast:2 arguments:self.parameter];
+    
+    [self callSubjectWithCount:3];
+    
+    XCTAssertTrue([matcher evaluate], @"expected positive match");
+}
+
+- (void)testItShouldNotMatchEvaluationsAndParametersForBeEvaluatedWithInappropriateCountAtLeast {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithCountAtLeast:2 arguments:self.parameter];
+    
+    [self callSubjectWithCount:1];
+    
+    XCTAssertFalse([matcher evaluate], @"expected negative match");
+}
+
+- (void)testItShouldMatchEvaluationsAndParametersForBeEvaluatedWithCountAtMost {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithCountAtMost:3 arguments:self.parameter];
+    
+    [self callSubjectWithCount:2];
+    
+    XCTAssertTrue([matcher evaluate], @"expected positive match");
+}
+
+- (void)testItShouldNotMatchEvaluationsAndParametersForBeEvaluatedWithInappropriateCountAtMost {
+    KWBeEvaluatedMatcher *matcher = self.matcher;
+    
+    [matcher beEvaluatedWithCountAtMost:2 arguments:self.parameter];
     
     [self callSubjectWithCount:3];
     
