@@ -2,6 +2,8 @@
 #import "KiwiTestConfiguration.h"
 #import "TestClasses.h"
 
+typedef void(^KWTestBlock)(id);
+
 SPEC_BEGIN(KWMessagePatternFunctionalTests)
 
 describe(@"message patterns", ^{
@@ -13,6 +15,19 @@ describe(@"message patterns", ^{
         [cruiser loadFighter:fighter];
     });
 
+});
+
+describe(@"block message patterns", ^{
+    
+    it(@"can match a call with a specific single argument", ^{
+        id argument = [NSObject new];
+        id block = theBlockProxy(^(id object) { [object description]; });
+        
+        [[block should] beEvaluatedWithArguments:argument];
+
+        ((KWTestBlock)block)(argument);
+    });
+    
 });
 
 SPEC_END
