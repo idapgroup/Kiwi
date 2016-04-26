@@ -531,6 +531,10 @@
 		D73BE5C91CCFB8BC0080CC79 /* KWMessagePattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D73BE5C51CCFB8BC0080CC79 /* KWMessagePattern.m */; };
 		D73BE5CB1CCFF4280080CC79 /* KWBlockMessagePatternTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */; };
 		D73BE5CC1CCFF4280080CC79 /* KWBlockMessagePatternTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */; };
+		D766D4911CD01526005F47AF /* KWBlockSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = D766D48F1CD01526005F47AF /* KWBlockSignature.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D766D4921CD01526005F47AF /* KWBlockSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = D766D48F1CD01526005F47AF /* KWBlockSignature.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D766D4931CD01526005F47AF /* KWBlockSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = D766D4901CD01526005F47AF /* KWBlockSignature.m */; };
+		D766D4941CD01526005F47AF /* KWBlockSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = D766D4901CD01526005F47AF /* KWBlockSignature.m */; };
 		D775FDB41CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB51CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB61CC246590081F88E /* KWBlockLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = D775FDB31CC246590081F88E /* KWBlockLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -847,6 +851,8 @@
 		D73BE5C41CCFB8BC0080CC79 /* KWMessagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWMessagePattern.h; sourceTree = "<group>"; };
 		D73BE5C51CCFB8BC0080CC79 /* KWMessagePattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWMessagePattern.m; sourceTree = "<group>"; };
 		D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockMessagePatternTest.m; sourceTree = "<group>"; };
+		D766D48F1CD01526005F47AF /* KWBlockSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockSignature.h; sourceTree = "<group>"; };
+		D766D4901CD01526005F47AF /* KWBlockSignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockSignature.m; sourceTree = "<group>"; };
 		D775FDB21CC246590081F88E /* KWBlockLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockLayout.m; sourceTree = "<group>"; };
 		D775FDB31CC246590081F88E /* KWBlockLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockLayout.h; sourceTree = "<group>"; };
 		D7A2CE751CC67D9C00AB351F /* KWBlockMessagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockMessagePattern.h; sourceTree = "<group>"; };
@@ -1095,6 +1101,8 @@
 				9F982CCF16A802920030A0B1 /* NSInvocation+KiwiAdditions.m */,
 				9F982CD016A802920030A0B1 /* NSInvocation+OCMAdditions.h */,
 				9F982CD116A802920030A0B1 /* NSInvocation+OCMAdditions.m */,
+				D766D48F1CD01526005F47AF /* KWBlockSignature.h */,
+				D766D4901CD01526005F47AF /* KWBlockSignature.m */,
 				9F982CD216A802920030A0B1 /* NSMethodSignature+KiwiAdditions.h */,
 				9F982CD316A802920030A0B1 /* NSMethodSignature+KiwiAdditions.m */,
 				9F982CD416A802920030A0B1 /* NSNumber+KiwiAdditions.h */,
@@ -1477,6 +1485,7 @@
 				4AE0306A1AEB480300556381 /* KWContainMatcher.h in Headers */,
 				4AE0306B1AEB480300556381 /* KWContainStringMatcher.h in Headers */,
 				4AE0306C1AEB480400556381 /* KWEqualMatcher.h in Headers */,
+				D766D4921CD01526005F47AF /* KWBlockSignature.h in Headers */,
 				4AE0306D1AEB480400556381 /* KWGenericMatcher.h in Headers */,
 				4AE030701AEB480400556381 /* KWHaveMatcher.h in Headers */,
 				4AE030711AEB480400556381 /* KWHaveValueMatcher.h in Headers */,
@@ -1589,6 +1598,7 @@
 				CE87C49F1AF1963B00310C07 /* KWExampleSuiteBuilder.h in Headers */,
 				CE87C49D1AF1963B00310C07 /* KWDeviceInfo.h in Headers */,
 				CE87C49B1AF1963B00310C07 /* KWCaptureSpy.h in Headers */,
+				D766D4911CD01526005F47AF /* KWBlockSignature.h in Headers */,
 				CE87C49A1AF1963B00310C07 /* KWCallSite.h in Headers */,
 				CE87C4CC1AF1963B00310C07 /* KWChangeMatcher.h in Headers */,
 				CE87C4CE1AF1963B00310C07 /* KWContainMatcher.h in Headers */,
@@ -1807,6 +1817,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D766D4941CD01526005F47AF /* KWBlockSignature.m in Sources */,
 				4AE02FDA1AEB47E600556381 /* KWSuiteConfigurationBase.m in Sources */,
 				4AE02FDB1AEB47E600556381 /* KWAllTestsSuite.m in Sources */,
 				4AE02FDC1AEB47E600556381 /* KWSymbolicator.m in Sources */,
@@ -1980,6 +1991,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D766D4931CD01526005F47AF /* KWBlockSignature.m in Sources */,
 				CE87C43D1AF195BE00310C07 /* KWSuiteConfigurationBase.m in Sources */,
 				CE87C43E1AF195BE00310C07 /* KWAllTestsSuite.m in Sources */,
 				CE87C43F1AF195BE00310C07 /* KWSymbolicator.m in Sources */,

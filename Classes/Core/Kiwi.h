@@ -99,6 +99,7 @@ extern "C" {
 #import <Kiwi/KWUserDefinedMatcher.h>
 #import <Kiwi/KWValue.h>
 #import <Kiwi/KWVerifying.h>
+#import <Kiwi/KWBlockSignature.h>
 
 // Public Foundation Categories
 #import <Kiwi/NSObject+KiwiMockAdditions.h>
