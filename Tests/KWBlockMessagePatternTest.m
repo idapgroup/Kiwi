@@ -47,7 +47,8 @@ typedef void(^KWTestBlock)(id, id);
     va_start(argumentList, firstBytes);
     id bytes = firstBytes;
     
-    for (NSUInteger i = 0; i < numberOfMessageArguments && bytes != nil; ++i) {
+    NSUInteger vaArgCount = numberOfMessageArguments - 1;
+    for (NSUInteger i = 0; i < vaArgCount; ++i) {
         [invocation setArgument:&bytes atIndex:i + 1];
         bytes = va_arg(argumentList, id);
     }
@@ -60,7 +61,7 @@ typedef void(^KWTestBlock)(id, id);
 - (void)setUp {
     [super setUp];
     
-    self.block = [KWProxyBlock blockWithBlock:^(id object1, id object2, id object3) { [object1 description]; }];
+    self.block = [KWProxyBlock blockWithBlock:^(id object1, id object2) { [object1 description]; }];
 }
 
 - (KWBlockMessagePattern *)messagePatternWithArguments:(id)firstArgument, ... {
