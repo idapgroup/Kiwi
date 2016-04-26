@@ -12,15 +12,13 @@
 
 #pragma mark - Initializing
 
-// this method should be overloaded by subclasses
 + (id)messagePatternFromInvocation:(NSInvocation *)anInvocation;
+
+- (id)initWithInvocation:(NSInvocation *)anInvocation;
 
 #pragma mark - Properties
 
 @property (nonatomic, readonly) NSArray *argumentFilters;
-
-// this method should be overloaded by subclasses
-@property (nonatomic, readonly) NSUInteger *argumentCount;
 
 #pragma mark - Matching Invocations
 
@@ -28,7 +26,6 @@
 
 #pragma mark - Comparing Message Patterns
 
-// this method should be overloaded by subclasses
 - (BOOL)isEqualToMessagePattern:(id)aMessagePattern;
 
 #pragma mark - Retrieving String Representations
@@ -52,6 +49,10 @@
 + (id)messagePatternWithFirstArgumentFilter:(id)firstArgumentFilter
                                argumentList:(va_list)argumentList
                               argumentCount:(NSUInteger)count;
+
+#pragma mark - Invocation Handling
+
+- (NSUInteger)argumentCountWithInvocation:(NSInvocation *)invocation;
 
 @end
 
