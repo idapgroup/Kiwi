@@ -67,12 +67,6 @@
     return NULL;
 }
 
-#pragma mark - Matching Invocations
-
-- (BOOL)matchesInvocation:(NSInvocation *)anInvocation {
-    return [super matchesInvocation:anInvocation];
-}
-
 #pragma mark - Comparing Message Patterns
 
 - (NSUInteger)hash {

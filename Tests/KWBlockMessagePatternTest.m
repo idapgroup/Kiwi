@@ -7,10 +7,11 @@
 //
 
 #import <Kiwi/Kiwi.h>
+
 #import "KiwiTestConfiguration.h"
-#import "NSInvocation+KiwiAdditions.h"
 #import "NSMethodSignature+KiwiAdditions.h"
 #import "TestClasses.h"
+#import "KWBlockInvocation.h"
 
 #if KW_TESTS_ENABLED
 
@@ -39,7 +40,7 @@ typedef void(^KWTestBlock)(id, id);
     NSMethodSignature *blockSignature = self.blockSignature;
     NSUInteger numberOfMessageArguments = [blockSignature numberOfMessageArguments];
 
-    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:self.blockSignature];
+    NSInvocation *invocation = [KWBlockInvocation invocationWithTarget:self.block];
     if (numberOfMessageArguments == 0)
         return invocation;
     
@@ -49,9 +50,11 @@ typedef void(^KWTestBlock)(id, id);
     
     NSUInteger vaArgCount = numberOfMessageArguments - 1;
     for (NSUInteger i = 0; i < vaArgCount; ++i) {
-        [invocation setArgument:&bytes atIndex:i + 1];
+        [invocation setMessageArgument:&bytes atIndex:i];
         bytes = va_arg(argumentList, id);
     }
+    
+    [invocation setMessageArgument:&bytes atIndex:vaArgCount];
     
     va_end(argumentList);
     
@@ -129,7 +132,7 @@ typedef void(^KWTestBlock)(id, id);
 }
 
 - (void)testItShouldNotMatchInvocationsWithAnyArguments {
-    KWBlockMessagePattern *messagePattern = [self messagePatternWithArguments:kKWFoo, [KWAny any]];
+    KWBlockMessagePattern *messagePattern = [self messagePatternWithArguments:kKWBar, [KWAny any]];
     
     NSInvocation *invocation = [self blockInvocationWithArguments:kKWFoo, kKWBar];
     

@@ -535,6 +535,10 @@
 		D766D4921CD01526005F47AF /* KWBlockSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = D766D48F1CD01526005F47AF /* KWBlockSignature.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D766D4931CD01526005F47AF /* KWBlockSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = D766D4901CD01526005F47AF /* KWBlockSignature.m */; };
 		D766D4941CD01526005F47AF /* KWBlockSignature.m in Sources */ = {isa = PBXBuildFile; fileRef = D766D4901CD01526005F47AF /* KWBlockSignature.m */; };
+		D766D4971CD016F7005F47AF /* KWBlockInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = D766D4951CD016F7005F47AF /* KWBlockInvocation.h */; };
+		D766D4981CD016F7005F47AF /* KWBlockInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = D766D4951CD016F7005F47AF /* KWBlockInvocation.h */; };
+		D766D4991CD016F7005F47AF /* KWBlockInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = D766D4961CD016F7005F47AF /* KWBlockInvocation.m */; };
+		D766D49A1CD016F7005F47AF /* KWBlockInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = D766D4961CD016F7005F47AF /* KWBlockInvocation.m */; };
 		D775FDB41CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB51CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB61CC246590081F88E /* KWBlockLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = D775FDB31CC246590081F88E /* KWBlockLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -853,6 +857,8 @@
 		D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockMessagePatternTest.m; sourceTree = "<group>"; };
 		D766D48F1CD01526005F47AF /* KWBlockSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockSignature.h; sourceTree = "<group>"; };
 		D766D4901CD01526005F47AF /* KWBlockSignature.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockSignature.m; sourceTree = "<group>"; };
+		D766D4951CD016F7005F47AF /* KWBlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockInvocation.h; sourceTree = "<group>"; };
+		D766D4961CD016F7005F47AF /* KWBlockInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockInvocation.m; sourceTree = "<group>"; };
 		D775FDB21CC246590081F88E /* KWBlockLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockLayout.m; sourceTree = "<group>"; };
 		D775FDB31CC246590081F88E /* KWBlockLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockLayout.h; sourceTree = "<group>"; };
 		D7A2CE751CC67D9C00AB351F /* KWBlockMessagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockMessagePattern.h; sourceTree = "<group>"; };
@@ -1097,6 +1103,8 @@
 				9F982CCA16A802920030A0B1 /* KWValue.m */,
 				9F982CCC16A802920030A0B1 /* KWWorkarounds.h */,
 				9F982CCD16A802920030A0B1 /* KWWorkarounds.m */,
+				D766D4951CD016F7005F47AF /* KWBlockInvocation.h */,
+				D766D4961CD016F7005F47AF /* KWBlockInvocation.m */,
 				9F982CCE16A802920030A0B1 /* NSInvocation+KiwiAdditions.h */,
 				9F982CCF16A802920030A0B1 /* NSInvocation+KiwiAdditions.m */,
 				9F982CD016A802920030A0B1 /* NSInvocation+OCMAdditions.h */,
@@ -1513,6 +1521,7 @@
 				4AE030861AEB480800556381 /* KWSharedExample.h in Headers */,
 				D775FDB71CC246590081F88E /* KWBlockLayout.h in Headers */,
 				D73BE5C71CCFB8BC0080CC79 /* KWMessagePattern.h in Headers */,
+				D766D4981CD016F7005F47AF /* KWBlockInvocation.h in Headers */,
 				4AE030881AEB480800556381 /* KWStub.h in Headers */,
 				4AE0308A1AEB480900556381 /* NSObject+KiwiStubAdditions.h in Headers */,
 				CE80E4511AF255BF00D2F0D6 /* KWBackgroundTask.h in Headers */,
@@ -1626,6 +1635,7 @@
 				CE87C4ED1AF1963B00310C07 /* KWIntercept.h in Headers */,
 				D775FDB61CC246590081F88E /* KWBlockLayout.h in Headers */,
 				D73BE5C61CCFB8BC0080CC79 /* KWMessagePattern.h in Headers */,
+				D766D4971CD016F7005F47AF /* KWBlockInvocation.h in Headers */,
 				CE87C4EB1AF1963B00310C07 /* KWSharedExampleRegistry.h in Headers */,
 				CE87C4E71AF1963B00310C07 /* KWLetNode.h in Headers */,
 				CE80E4501AF255BF00D2F0D6 /* KWBackgroundTask.h in Headers */,
@@ -1840,6 +1850,7 @@
 				4AE02FEB1AEB47E600556381 /* KWNull.m in Sources */,
 				D7A2CE7A1CC67D9C00AB351F /* KWBlockMessagePattern.m in Sources */,
 				4AE02FEC1AEB47E600556381 /* KWObjCUtilities.m in Sources */,
+				D766D49A1CD016F7005F47AF /* KWBlockInvocation.m in Sources */,
 				4AE02FED1AEB47E600556381 /* KWProbePoller.m in Sources */,
 				CE80E4531AF255BF00D2F0D6 /* KWBackgroundTask.m in Sources */,
 				4AE02FEE1AEB47E600556381 /* KWSpec.m in Sources */,
@@ -2014,6 +2025,7 @@
 				CE87C44E1AF195BE00310C07 /* KWNull.m in Sources */,
 				D7A2CE791CC67D9C00AB351F /* KWBlockMessagePattern.m in Sources */,
 				CE87C44F1AF195BE00310C07 /* KWObjCUtilities.m in Sources */,
+				D766D4991CD016F7005F47AF /* KWBlockInvocation.m in Sources */,
 				CE87C4501AF195BE00310C07 /* KWProbePoller.m in Sources */,
 				CE80E4521AF255BF00D2F0D6 /* KWBackgroundTask.m in Sources */,
 				CE87C4511AF195BE00310C07 /* KWSpec.m in Sources */,

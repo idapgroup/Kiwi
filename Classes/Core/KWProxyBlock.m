@@ -13,6 +13,7 @@
 #import "KWMessageSpying.h"
 
 #import "NSObject+KiwiStubAdditions.h"
+#import "NSInvocation+KiwiAdditions.h"
 
 @interface NSInvocation (KWPrivateInterface)
 
@@ -122,6 +123,8 @@
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
+    [anInvocation becomeBlockInvocation];
+    
     NSMapTable *spiesMap = self.messageSpies;
     for (KWBlockMessagePattern *messagePattern in spiesMap) {
         if ([messagePattern matchesInvocation:anInvocation]) {
