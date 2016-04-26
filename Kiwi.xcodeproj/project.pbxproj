@@ -529,6 +529,8 @@
 		D73BE5C71CCFB8BC0080CC79 /* KWAbstractMessagePattern.h in Headers */ = {isa = PBXBuildFile; fileRef = D73BE5C41CCFB8BC0080CC79 /* KWAbstractMessagePattern.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D73BE5C81CCFB8BC0080CC79 /* KWAbstractMessagePattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D73BE5C51CCFB8BC0080CC79 /* KWAbstractMessagePattern.m */; };
 		D73BE5C91CCFB8BC0080CC79 /* KWAbstractMessagePattern.m in Sources */ = {isa = PBXBuildFile; fileRef = D73BE5C51CCFB8BC0080CC79 /* KWAbstractMessagePattern.m */; };
+		D73BE5CB1CCFF4280080CC79 /* KWBlockMessagePatternTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */; };
+		D73BE5CC1CCFF4280080CC79 /* KWBlockMessagePatternTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */; };
 		D775FDB41CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB51CC246590081F88E /* KWBlockLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = D775FDB21CC246590081F88E /* KWBlockLayout.m */; };
 		D775FDB61CC246590081F88E /* KWBlockLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = D775FDB31CC246590081F88E /* KWBlockLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -844,6 +846,7 @@
 		D73A29941CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBeEvaluatedMatcherTest.m; sourceTree = "<group>"; };
 		D73BE5C41CCFB8BC0080CC79 /* KWAbstractMessagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWAbstractMessagePattern.h; sourceTree = "<group>"; };
 		D73BE5C51CCFB8BC0080CC79 /* KWAbstractMessagePattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWAbstractMessagePattern.m; sourceTree = "<group>"; };
+		D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockMessagePatternTest.m; sourceTree = "<group>"; };
 		D775FDB21CC246590081F88E /* KWBlockLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KWBlockLayout.m; sourceTree = "<group>"; };
 		D775FDB31CC246590081F88E /* KWBlockLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockLayout.h; sourceTree = "<group>"; };
 		D7A2CE751CC67D9C00AB351F /* KWBlockMessagePattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KWBlockMessagePattern.h; sourceTree = "<group>"; };
@@ -1359,6 +1362,7 @@
 				F5D7C8D311643C2900758FEA /* KWDeviceInfoTest.m */,
 				89861D9316FE0EE5008CE99D /* KWFormatterTest.m */,
 				F55E61CD119B74D600F30B42 /* KWMessagePatternTest.m */,
+				D73BE5CA1CCFF4280080CC79 /* KWBlockMessagePatternTest.m */,
 				DAAC61CA17E75B50000165F6 /* KWObjCUtilitiesTest.m */,
 				D7C3D1431CC4E7C000A0E0AD /* KWProxyBlockTest.m */,
 				F5FC83B511B100B100BF98A2 /* KWStringUtilitiesTest.m */,
@@ -1935,6 +1939,7 @@
 				4AE030A81AEB494400556381 /* KWRealObjectSpyTest.m in Sources */,
 				4AE030A91AEB494400556381 /* KWRealObjectStubTest.m in Sources */,
 				D73A29961CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m in Sources */,
+				D73BE5CC1CCFF4280080CC79 /* KWBlockMessagePatternTest.m in Sources */,
 				4AE030AA1AEB494400556381 /* KWStubTest.m in Sources */,
 				4AE030AB1AEB494400556381 /* KWCaptureTest.m in Sources */,
 				4AE030AC1AEB494400556381 /* KWSharedExampleRegistryTest.m in Sources */,
@@ -2107,6 +2112,7 @@
 				CE87C50E1AF1994200310C07 /* KWRealObjectStubTest.m in Sources */,
 				CE87C50F1AF1994200310C07 /* KWStubTest.m in Sources */,
 				D73A29951CC90571007BEAFB /* KWBeEvaluatedMatcherTest.m in Sources */,
+				D73BE5CB1CCFF4280080CC79 /* KWBlockMessagePatternTest.m in Sources */,
 				CE87C5101AF1994200310C07 /* KWCaptureTest.m in Sources */,
 				CE87C5111AF1994200310C07 /* KWSharedExampleRegistryTest.m in Sources */,
 				CE87C5121AF1994200310C07 /* KWSharedExampleTest.m in Sources */,

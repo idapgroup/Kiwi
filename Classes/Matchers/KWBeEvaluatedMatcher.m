@@ -32,7 +32,8 @@
 #pragma mark - Configuring Matchers
 
 - (void)beEvaluated {
-    [self beEvaluatedWithUnspecifiedCountOfMessagePattern:[KWBlockMessagePattern messagePattern]];
+    id pattern = [KWBlockMessagePattern messagePatternWithSignature:[self subjectSignature]];
+    [self beEvaluatedWithUnspecifiedCountOfMessagePattern:pattern];
 }
 
 - (void)beEvaluatedWithCount:(NSUInteger)aCount {
@@ -48,9 +49,9 @@
 }
 
 - (void)beEvaluatedWithCountType:(KWCountType)aCountType count:(NSUInteger)aCount {
-    [self receiveMessagePattern:[KWBlockMessagePattern messagePattern]
-                      countType:aCountType
-                          count:aCount];
+    id pattern = [KWBlockMessagePattern messagePatternWithSignature:[self subjectSignature]];
+    
+    [self receiveMessagePattern:pattern countType:aCountType count:aCount];
 }
 
 - (void)beEvaluatedWithUnspecifiedCountOfMessagePattern:(KWBlockMessagePattern *)messagePattern {
@@ -66,17 +67,20 @@
 - (void)beEvaluatedWithArguments:(id)firstArgument, ... {
     KWStartVAListWithVariableName(argumentList);
 
-    KWBlockMessagePattern *messagePattern = [KWBlockMessagePattern messagePatternWithFirstArgumentFilter:firstArgument
-                                                                                            argumentList:argumentList];
+    id pattern = [KWBlockMessagePattern messagePatternWithSignature:[self subjectSignature]
+                                                firstArgumentFilter:firstArgument
+                                                       argumentList:argumentList];
 
-    [self beEvaluatedWithUnspecifiedCountOfMessagePattern:messagePattern];
+    [self beEvaluatedWithUnspecifiedCountOfMessagePattern:pattern];
 }
 
 #define KWReceiveVAListMessagePatternWithCountType(aCountType) \
     do { \
         KWStartVAListWithVariableName(argumentList); \
-        id messagePattern = [KWBlockMessagePattern messagePatternWithFirstArgumentFilter:firstArgument argumentList:argumentList]; \
-        [self receiveMessagePattern:messagePattern countType:aCountType count:aCount]; \
+        id pattern = [KWBlockMessagePattern messagePatternWithSignature:[self subjectSignature] \
+                                                    firstArgumentFilter:firstArgument \
+                                                           argumentList:argumentList]; \
+        [self receiveMessagePattern:pattern countType:aCountType count:aCount]; \
     } while(0)
 
 - (void)beEvaluatedWithCount:(NSUInteger)aCount arguments:(id)firstArgument, ... {
@@ -123,5 +127,8 @@
     return [super evaluate];
 }
 
+- (NSMethodSignature *)subjectSignature {
+    return [self.subject methodSignature];
+}
 
 @end
