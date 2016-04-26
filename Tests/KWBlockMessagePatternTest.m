@@ -37,7 +37,7 @@ typedef void(^KWTestBlock)(id, id);
 
 - (NSInvocation *)blockInvocationWithArguments:(id)firstBytes, ... {
     NSMethodSignature *blockSignature = self.blockSignature;
-    NSUInteger numberOfMessageArguments = [blockSignature numberOfBlockMessageArguments];
+    NSUInteger numberOfMessageArguments = [blockSignature numberOfMessageArguments];
 
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:self.blockSignature];
     if (numberOfMessageArguments == 0)

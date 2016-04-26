@@ -32,7 +32,7 @@
     firstArgumentFilter:(id)firstArgumentFilter
            argumentList:(va_list)argumentList
 {
-    NSUInteger argumentCount = [signature numberOfBlockMessageArguments];
+    NSUInteger argumentCount = [signature numberOfMessageArguments];
     NSArray *argumentFilters = [self argumentFiltersWithFirstArgumentFilter:firstArgumentFilter
                                                                argumentList:argumentList
                                                               argumentCount:argumentCount];
@@ -109,7 +109,7 @@
 - (NSUInteger)argumentCountWithInvocation:(NSInvocation *)anInvocation {
     NSMethodSignature *signature = [anInvocation methodSignature];
     
-    return [signature numberOfBlockMessageArguments];
+    return [signature numberOfMessageArguments];
 }
 
 @end
