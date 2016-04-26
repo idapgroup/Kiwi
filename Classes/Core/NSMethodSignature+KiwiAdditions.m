@@ -14,6 +14,10 @@
     return [self numberOfArguments] - 2;
 }
 
+- (NSUInteger)numberOfBlockMessageArguments {
+    return [self numberOfArguments] - 1;
+}
+
 - (const char *)messageArgumentTypeAtIndex:(NSUInteger)anIndex {
     return [self getArgumentTypeAtIndex:anIndex + 2];
 }

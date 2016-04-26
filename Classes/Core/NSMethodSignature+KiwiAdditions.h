@@ -11,6 +11,7 @@
 #pragma mark - Getting Information on Message Arguments
 
 - (NSUInteger)numberOfMessageArguments;
+- (NSUInteger)numberOfBlockMessageArguments;
 - (const char *)messageArgumentTypeAtIndex:(NSUInteger)anIndex;
 
 @end
