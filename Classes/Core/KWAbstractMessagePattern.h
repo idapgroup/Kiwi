@@ -14,6 +14,7 @@
 
 + (id)messagePatternFromInvocation:(NSInvocation *)anInvocation;
 
+// this method should be overloaded by subclasses
 - (id)initWithInvocation:(NSInvocation *)anInvocation;
 
 #pragma mark - Properties
@@ -41,17 +42,17 @@
 #pragma mark - Initializing
 
 - (id)initWithArgumentFilters:(NSArray *)anArray;
-- (id)initWithFirstArgumentFilter:(id)firstArgumentFilter
-                     argumentList:(va_list)argumentList
-                    argumentCount:(NSUInteger)count;
 
-+ (id)messagePatternWithArgumentFilters:(NSArray *)anArray;
-+ (id)messagePatternWithFirstArgumentFilter:(id)firstArgumentFilter
-                               argumentList:(va_list)argumentList
-                              argumentCount:(NSUInteger)count;
+#pragma mark - Argument Filters Creation
+
+- (NSArray *)argumentFiltersWithInvocation:(NSInvocation *)invocation;
+- (NSArray *)argumentFiltersWithFirstArgumentFilter:(id)firstArgumentFilter
+                                       argumentList:(va_list)argumentList
+                                      argumentCount:(NSUInteger)count;
 
 #pragma mark - Invocation Handling
 
+// this method should be overloaded by subclasses
 - (NSUInteger)argumentCountWithInvocation:(NSInvocation *)invocation;
 
 @end

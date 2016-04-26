@@ -31,66 +31,8 @@
     return self;
 }
 
-- (id)initWithFirstArgumentFilter:(id)firstArgumentFilter
-                     argumentList:(va_list)argumentList
-                    argumentCount:(NSUInteger)count
-{
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:count];
-    [array addObject:(firstArgumentFilter != nil) ? firstArgumentFilter : [KWNull null]];
-    
-    for (NSUInteger i = 1; i < count; ++i)
-    {
-        id object = va_arg(argumentList, id);
-        [array addObject:(object != nil) ? object : [KWNull null]];
-    }
-    
-    va_end(argumentList);
-    
-    return [self initWithArgumentFilters:array];
-}
-
 - (id)initWithInvocation:(NSInvocation *)anInvocation {
-    NSMethodSignature *signature = [anInvocation methodSignature];
-    NSUInteger numberOfMessageArguments = [self argumentCountWithInvocation:anInvocation];
-    NSMutableArray *argumentFilters = nil;
-    
-    if (numberOfMessageArguments > 0) {
-        argumentFilters = [[NSMutableArray alloc] initWithCapacity:numberOfMessageArguments];
-        
-        for (NSUInteger i = 0; i < numberOfMessageArguments; ++i) {
-            const char *type = [signature messageArgumentTypeAtIndex:i];
-            void* argumentDataBuffer = malloc(KWObjCTypeLength(type));
-            [anInvocation getMessageArgument:argumentDataBuffer atIndex:i];
-            id object = nil;
-            if(*(__unsafe_unretained id*)argumentDataBuffer != [KWAny any] && !KWObjCTypeIsObject(type)) {
-                NSData *data = [anInvocation messageArgumentDataAtIndex:i];
-                object = [KWValue valueWithBytes:[data bytes] objCType:type];
-            } else {
-                object = *(__unsafe_unretained id*)argumentDataBuffer;
-                
-                if (object != [KWAny any] && KWObjCTypeIsBlock(type)) {
-                    object = [object copy]; // Converting NSStackBlock to NSMallocBlock
-                }
-            }
-            
-            [argumentFilters addObject:(object != nil) ? object : [KWNull null]];
-            
-            free(argumentDataBuffer);
-        }
-    }
-    
-    return [self initWithArgumentFilters:argumentFilters];
-}
-
-+ (id)messagePatternWithArgumentFilters:(NSArray *)anArray {
-    return [[self alloc] initWithArgumentFilters:anArray];
-}
-
-+ (id)messagePatternWithFirstArgumentFilter:(id)firstArgumentFilter
-                               argumentList:(va_list)argumentList
-                              argumentCount:(NSUInteger)count
-{
-    return [[self alloc] initWithFirstArgumentFilter:firstArgumentFilter argumentList:argumentList argumentCount:count];
+    return [self initWithArgumentFilters:[self argumentFiltersWithInvocation:anInvocation]];
 }
 
 + (id)messagePatternFromInvocation:(NSInvocation *)anInvocation {
@@ -194,6 +136,58 @@
     return [NSString stringWithFormat:@"argumentFilters: %@", self.argumentFilters];
 }
 
+#pragma mark - Argument Filters Creation
+
+- (NSArray *)argumentFiltersWithInvocation:(NSInvocation *)anInvocation {
+    NSMethodSignature *signature = [anInvocation methodSignature];
+    NSUInteger numberOfMessageArguments = [self argumentCountWithInvocation:anInvocation];
+    NSMutableArray *argumentFilters = nil;
+    
+    if (numberOfMessageArguments > 0) {
+        argumentFilters = [[NSMutableArray alloc] initWithCapacity:numberOfMessageArguments];
+        
+        for (NSUInteger i = 0; i < numberOfMessageArguments; ++i) {
+            const char *type = [signature messageArgumentTypeAtIndex:i];
+            void* argumentDataBuffer = malloc(KWObjCTypeLength(type));
+            [anInvocation getMessageArgument:argumentDataBuffer atIndex:i];
+            id object = nil;
+            if(*(__unsafe_unretained id*)argumentDataBuffer != [KWAny any] && !KWObjCTypeIsObject(type)) {
+                NSData *data = [anInvocation messageArgumentDataAtIndex:i];
+                object = [KWValue valueWithBytes:[data bytes] objCType:type];
+            } else {
+                object = *(__unsafe_unretained id*)argumentDataBuffer;
+                
+                if (object != [KWAny any] && KWObjCTypeIsBlock(type)) {
+                    object = [object copy]; // Converting NSStackBlock to NSMallocBlock
+                }
+            }
+            
+            [argumentFilters addObject:(object != nil) ? object : [KWNull null]];
+            
+            free(argumentDataBuffer);
+        }
+    }
+    
+    return argumentFilters;
+}
+
+- (NSArray *)argumentFiltersWithFirstArgumentFilter:(id)firstArgumentFilter
+                                       argumentList:(va_list)argumentList
+                                      argumentCount:(NSUInteger)count
+{
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:count];
+    [array addObject:(firstArgumentFilter != nil) ? firstArgumentFilter : [KWNull null]];
+    
+    for (NSUInteger i = 1; i < count; ++i)
+    {
+        id object = va_arg(argumentList, id);
+        [array addObject:(object != nil) ? object : [KWNull null]];
+    }
+    
+    va_end(argumentList);
+    
+    return array;
+}
 
 #pragma mark - Invocation Handling
 
