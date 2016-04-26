@@ -23,12 +23,9 @@
 }
 
 - (id)initWithSelector:(SEL)aSelector argumentFilters:(NSArray *)anArray {
-    self = [super init];
+    self = [super initWithArgumentFilters:anArray];;
     if (self) {
-        selector = aSelector;
-
-        if ([anArray count] > 0)
-            argumentFilters = [anArray copy];
+        _selector = aSelector;
     }
 
     return self;
@@ -36,17 +33,18 @@
 
 - (id)initWithSelector:(SEL)aSelector firstArgumentFilter:(id)firstArgumentFilter argumentList:(va_list)argumentList {
     NSUInteger count = KWSelectorParameterCount(aSelector);
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:count];
-    [array addObject:(firstArgumentFilter != nil) ? firstArgumentFilter : [KWNull null]];
 
-    for (NSUInteger i = 1; i < count; ++i)
-    {
-        id object = va_arg(argumentList, id);
-        [array addObject:(object != nil) ? object : [KWNull null]];
-    }
+    NSArray *argumentFilters = [self argumentFiltersWithFirstArgumentFilter:firstArgumentFilter
+                                                               argumentList:argumentList
+                                                              argumentCount:count];
 
-    va_end(argumentList);
-    return [self initWithSelector:aSelector argumentFilters:array];
+    return [self initWithSelector:aSelector argumentFilters:argumentFilters];
+}
+
+- (id)initWithInvocation:(NSInvocation *)anInvocation {
+    NSArray *argumentFilters = [self argumentFiltersWithInvocation:anInvocation];
+    
+    return [self initWithSelector:anInvocation.selector argumentFilters:argumentFilters];
 }
 
 + (id)messagePatternWithSelector:(SEL)aSelector {
@@ -61,101 +59,10 @@
     return [[self alloc] initWithSelector:aSelector firstArgumentFilter:firstArgumentFilter argumentList:argumentList];
 }
 
-+ (id)messagePatternFromInvocation:(NSInvocation *)anInvocation {
-    NSMethodSignature *signature = [anInvocation methodSignature];
-    NSUInteger numberOfMessageArguments = [signature numberOfMessageArguments];
-    NSMutableArray *argumentFilters = nil;
-
-    if (numberOfMessageArguments > 0) {
-        argumentFilters = [[NSMutableArray alloc] initWithCapacity:numberOfMessageArguments];
-
-        for (NSUInteger i = 0; i < numberOfMessageArguments; ++i) {
-			const char *type = [signature messageArgumentTypeAtIndex:i];
-			void* argumentDataBuffer = malloc(KWObjCTypeLength(type));
-			[anInvocation getMessageArgument:argumentDataBuffer atIndex:i];
-			id object = nil;
-			if(*(__unsafe_unretained id*)argumentDataBuffer != [KWAny any] && !KWObjCTypeIsObject(type)) {
-                NSData *data = [anInvocation messageArgumentDataAtIndex:i];
-                object = [KWValue valueWithBytes:[data bytes] objCType:type];
-            } else {
-				object = *(__unsafe_unretained id*)argumentDataBuffer;
-
-				if (object != [KWAny any] && KWObjCTypeIsBlock(type)) {
-					object = [object copy]; // Converting NSStackBlock to NSMallocBlock
-				}
-			}
-			
-            [argumentFilters addObject:(object != nil) ? object : [KWNull null]];
-
-			free(argumentDataBuffer);
-        }
-    }
-
-    return [self messagePatternWithSelector:[anInvocation selector] argumentFilters:argumentFilters];
-}
-
-#pragma mark - Properties
-
-@synthesize selector;
-@synthesize argumentFilters;
-
 #pragma mark - Matching Invocations
 
-- (BOOL)argumentFiltersMatchInvocationArguments:(NSInvocation *)anInvocation {
-    if (self.argumentFilters == nil)
-        return YES;
-
-    NSMethodSignature *signature = [anInvocation methodSignature];
-    NSUInteger numberOfArgumentFilters = [self.argumentFilters count];
-    NSUInteger numberOfMessageArguments = [signature numberOfMessageArguments];
-
-    for (NSUInteger i = 0; i < numberOfMessageArguments && i < numberOfArgumentFilters; ++i) {
-        const char *objCType = [signature messageArgumentTypeAtIndex:i];
-        id __autoreleasing object = nil;
-
-        // Extract message argument into object (wrapping values if neccesary)
-        if (KWObjCTypeIsObject(objCType) || KWObjCTypeIsClass(objCType)) {
-            [anInvocation getMessageArgument:&object atIndex:i];
-        } else {
-            NSData *data = [anInvocation messageArgumentDataAtIndex:i];
-            object = [KWValue valueWithBytes:[data bytes] objCType:objCType];
-        }
-
-        // Match argument filter to object
-        id argumentFilter = (self.argumentFilters)[i];
-
-        if ([argumentFilter isEqual:[KWAny any]]) {
-            continue;
-        }
-
-        if ([KWGenericMatchEvaluator isGenericMatcher:argumentFilter]) {
-            id matcher = argumentFilter;
-            if ([object isKindOfClass:[KWValue class]] && [object isNumeric]) {
-                NSNumber *number = [object numberValue];
-                if (![KWGenericMatchEvaluator genericMatcher:matcher matches:number]) {
-                    return NO;
-                }
-            } else if (![KWGenericMatchEvaluator genericMatcher:matcher matches:object]) {
-                return NO;
-            }
-        } else if ([argumentFilter isEqual:[KWNull null]]) {
-            if (!KWObjCTypeIsPointerLike(objCType)) {
-                [NSException raise:@"KWMessagePatternException" format:@"nil was specified as an argument filter, but argument(%d) is not a pointer for @selector(%@)", (int)(i + 1), NSStringFromSelector([anInvocation selector])];
-            }
-            void *p = nil;
-            [anInvocation getMessageArgument:&p atIndex:i];
-            if (p != nil)
-                return NO;
-        } else if (![argumentFilter isEqual:object]) {
-            return NO;
-        }
-    }
-
-    return YES;
-}
-
 - (BOOL)matchesInvocation:(NSInvocation *)anInvocation {
-    return self.selector == [anInvocation selector] && [self argumentFiltersMatchInvocationArguments:anInvocation];
+    return self.selector == [anInvocation selector] && [super matchesInvocation:anInvocation];
 }
 
 #pragma mark - Comparing Message Patterns
@@ -164,21 +71,11 @@
     return [NSStringFromSelector(self.selector) hash];
 }
 
-- (BOOL)isEqual:(id)object {
-    if (![object isKindOfClass:[KWMessagePattern class]])
-        return NO;
-
-    return [self isEqualToMessagePattern:object];
-}
-
 - (BOOL)isEqualToMessagePattern:(KWMessagePattern *)aMessagePattern {
     if (self.selector != aMessagePattern.selector)
         return NO;
 
-    if (self.argumentFilters == nil && aMessagePattern.argumentFilters == nil)
-        return YES;
-
-    return [self.argumentFilters isEqualToArray:aMessagePattern.argumentFilters];
+    return [super isEqualToMessagePattern:aMessagePattern];
 }
 
 #pragma mark - Retrieving String Representations
@@ -214,6 +111,14 @@
     return [NSString stringWithFormat:@"selector: %@\nargumentFilters: %@",
                                       NSStringFromSelector(self.selector),
                                       self.argumentFilters];
+}
+
+#pragma mark - Invocation Handling
+
+- (NSUInteger)argumentCountWithInvocation:(NSInvocation *)anInvocation {
+    NSMethodSignature *signature = [anInvocation methodSignature];
+    
+    return [signature numberOfMessageArguments];
 }
 
 @end

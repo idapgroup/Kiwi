@@ -4,9 +4,9 @@
 // Copyright 2010 Allen Ding. All rights reserved.
 //
 
-#import "KiwiConfiguration.h"
+#import "KWAbstractMessagePattern.h"
 
-@interface KWMessagePattern : NSObject
+@interface KWMessagePattern : KWAbstractMessagePattern
 
 #pragma mark - Initializing
 
@@ -18,12 +18,9 @@
 + (id)messagePatternWithSelector:(SEL)aSelector argumentFilters:(NSArray *)anArray;
 + (id)messagePatternWithSelector:(SEL)aSelector firstArgumentFilter:(id)firstArgumentFilter argumentList:(va_list)argumentList;
 
-+ (id)messagePatternFromInvocation:(NSInvocation *)anInvocation;
-
 #pragma mark - Properties
 
 @property (nonatomic, readonly) SEL selector;
-@property (nonatomic, readonly) NSArray *argumentFilters;
 
 #pragma mark - Matching Invocations
 
