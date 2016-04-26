@@ -53,6 +53,7 @@
 @synthesize descriptor = _descriptor;
 
 @dynamic blockLayout;
+@dynamic methodSignature;
 
 #pragma mark - Deallocating
 
@@ -110,10 +111,14 @@
     return (__bridge KWBlockLayout *)(self.block);
 }
 
+- (NSMethodSignature *)methodSignature {
+    return KWBlockLayoutGetMethodSignature(self.blockLayout);
+}
+
 #pragma mark - Forwarding
 
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)selector {
-    return KWBlockLayoutGetMethodSignature(self.blockLayout);
+    return self.methodSignature;
 }
 
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
