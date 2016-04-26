@@ -14,26 +14,45 @@
 
 #if KW_TESTS_ENABLED
 
+
+static const uint8_t KWTestStructValueCount = 4;
+
+struct KWTestStruct {
+    uint64_t values[KWTestStructValueCount];
+};
+typedef struct KWTestStruct KWTestStruct;
+
+static
+BOOL KWTestStructEqualsTestStruct(KWTestStruct struct1, KWTestStruct struct2) {
+    for (uint8_t i = 0; i < KWTestStructValueCount; i++) {
+        if (struct1.values[i] != struct2.values[i]) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 // test values
 static const NSUInteger KWUIntValue = 1;
 static NSString * const KWStringValue = @"mama";
-static const CGRect KWRectValue = (CGRect){{1.0, 1.0}, {1.0, 1.0}};
+static const KWTestStruct KWStructValue = (KWTestStruct){{1.0, 1.0, 1.0, 1.0}};
 
 // test typedefs
 typedef void(^__KWVoidBlock)(void);
-typedef void(^__KWVoidBlockMultiparam)(NSUInteger, id, CGRect);
+typedef void(^__KWVoidBlockMultiparam)(NSUInteger, id, KWTestStruct);
 
 typedef NSUInteger(^__KWPrimitiveBlock)(void);
 
 typedef id(^__KWObjectBlock)(void);
-typedef id(^__KWObjectBlockMultiparam)(NSUInteger, id, CGRect);
+typedef id(^__KWObjectBlockMultiparam)(NSUInteger, id, KWTestStruct);
 
-typedef CGRect(^__KWStretBlock)(void);
-typedef CGRect(^__KWStretBlockMultiparam)(NSUInteger, id, CGRect);
+typedef KWTestStruct(^__KWStretBlock)(void);
+typedef KWTestStruct(^__KWStretBlockMultiparam)(NSUInteger, id, KWTestStruct);
 
 @interface KWProxyBlockTest : XCTestCase
 
-- (void)assertCorrectParamsWithUInteger:(NSUInteger)intValue object:(id)object structure:(CGRect)rect;
+- (void)assertCorrectParamsWithUInteger:(NSUInteger)intValue object:(id)object structure:(KWTestStruct)rect;
 
 @end
 
@@ -91,29 +110,29 @@ typedef CGRect(^__KWStretBlockMultiparam)(NSUInteger, id, CGRect);
     __KWStretBlock block = ^{
         _evaluated = YES;
         
-        return KWRectValue;
+        return KWStructValue;
     };
     
     KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
     
-    XCTAssertTrue(CGRectEqualToRect(KWRectValue, ((__KWStretBlock)wrappedBlock)()),
+    XCTAssertTrue(KWTestStructEqualsTestStruct(KWStructValue, ((__KWStretBlock)wrappedBlock)()),
                   "wrapped block didn't return a proper value");
 }
 
 #pragma mark - Test block with parameters
 
 - (void)testItShouldEvaluateWrappedVoidBlockWithMultipleParameters {
-    __KWVoidBlockMultiparam block = ^(NSUInteger intValue, id object, CGRect rect) {
+    __KWVoidBlockMultiparam block = ^(NSUInteger intValue, id object, KWTestStruct rect) {
         [self assertCorrectParamsWithUInteger:intValue object:object structure:rect];
     };
     
     KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
     
-    ((__KWVoidBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWRectValue);
+    ((__KWVoidBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWStructValue);
 }
 
 - (void)testItShouldEvaluateWrappedObjectBlockWithMultipleParameters {
-    __KWObjectBlockMultiparam block = ^(NSUInteger intValue, id object, CGRect rect) {
+    __KWObjectBlockMultiparam block = ^(NSUInteger intValue, id object, KWTestStruct rect) {
         [self assertCorrectParamsWithUInteger:intValue object:object structure:rect];
         
         return KWStringValue;
@@ -121,30 +140,30 @@ typedef CGRect(^__KWStretBlockMultiparam)(NSUInteger, id, CGRect);
     
     KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
     
-    id object = ((__KWObjectBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWRectValue);
+    id object = ((__KWObjectBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWStructValue);
     
     XCTAssertEqualObjects(KWStringValue, object, "wrapped block didn't return a proper value");
 }
 
 - (void)testItShouldEvaluateWrappedStretBlockWithMultipleParameters {
-    __KWStretBlockMultiparam block = ^(NSUInteger intValue, id object, CGRect rect) {
+    __KWStretBlockMultiparam block = ^(NSUInteger intValue, id object, KWTestStruct rect) {
         [self assertCorrectParamsWithUInteger:intValue object:object structure:rect];
         
-        return KWRectValue;
+        return KWStructValue;
     };
     
     KWProxyBlock *wrappedBlock = [KWProxyBlock blockWithBlock:block];
     
-    CGRect rect = ((__KWStretBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWRectValue);
+    KWTestStruct rect = ((__KWStretBlockMultiparam)wrappedBlock)(KWUIntValue, KWStringValue, KWStructValue);
     
-    XCTAssertTrue(CGRectEqualToRect(KWRectValue, rect), "wrapped block didn't return a proper value");
+    XCTAssertTrue(KWTestStructEqualsTestStruct(KWStructValue, rect), "wrapped block didn't return a proper value");
 }
 
 
-- (void)assertCorrectParamsWithUInteger:(NSUInteger)intValue object:(id)object structure:(CGRect)rect {
+- (void)assertCorrectParamsWithUInteger:(NSUInteger)intValue object:(id)object structure:(KWTestStruct)rect {
     _evaluated = YES;
     
-    XCTAssertTrue(CGRectEqualToRect(KWRectValue, rect), "wrapped block didn't return a proper value");
+    XCTAssertTrue(KWTestStructEqualsTestStruct(KWStructValue, rect), "wrapped block didn't return a proper value");
     XCTAssertEqualObjects(KWStringValue, object, "wrapped block didn't return a proper value");
     XCTAssertEqual(KWUIntValue, intValue, "wrapped block didn't return a proper value");
 }
