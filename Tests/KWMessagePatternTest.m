@@ -218,7 +218,7 @@
 
     KWTestMessagePatternSelector([[self.messagePatternClass alloc] init]);
     KWTestMessagePatternSelector([[self.messagePatternClass alloc] initWithArgumentFilters:nil]);
-    KWTestMessagePatternSelector([self messagePatternWithSelector:@selector(loadView) arguments:nil]);
+    KWTestMessagePatternSelector([self messagePatternWithSelector:@selector(description) arguments:nil]);
     KWTestMessagePatternSelector([self.messagePatternClass messagePattern]);
     KWTestMessagePatternSelector([self.messagePatternClass messagePatternWithArgumentFilters:nil]);
     
