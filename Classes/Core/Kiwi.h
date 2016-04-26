@@ -74,6 +74,7 @@ extern "C" {
 #import <Kiwi/KWMatching.h>
 #import <Kiwi/KWMessagePattern.h>
 #import <Kiwi/KWBlockMessagePattern.h>
+#import <Kiwi/KWSelectorMessagePattern.h>
 #import <Kiwi/KWMessageSpying.h>
 #import <Kiwi/KWMock.h>
 #import <Kiwi/KWNilMatcher.h>

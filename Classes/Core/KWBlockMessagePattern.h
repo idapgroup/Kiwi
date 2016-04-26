@@ -6,9 +6,9 @@
 //  Copyright © 2016 Allen Ding. All rights reserved.
 //
 
-#import "KWAbstractMessagePattern.h"
+#import "KWMessagePattern.h"
 
-@interface KWBlockMessagePattern : KWAbstractMessagePattern
+@interface KWBlockMessagePattern : KWMessagePattern
 
 #pragma mark - Initializing
 
