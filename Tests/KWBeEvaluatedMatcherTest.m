@@ -71,7 +71,9 @@ typedef void(^KWTestBlock)(id);
                            @"beEvaluatedWithArguments:",
                            @"beEvaluatedWithCount:arguments:",
                            @"beEvaluatedWithCountAtLeast:arguments:",
-                           @"beEvaluatedWithCountAtMost:arguments:"];
+                           @"beEvaluatedWithCountAtMost:arguments:",
+                           @"beEvaluatedWithUnspecifiedCountOfMessagePattern:",
+                           @"beEvaluatedWithMessagePattern:countType:count:"];
     
     XCTAssertEqualObjects([matcherStrings sortedArrayUsingSelector:@selector(compare:)],
                           [expectedStrings sortedArrayUsingSelector:@selector(compare:)],

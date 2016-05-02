@@ -181,8 +181,7 @@
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:count];
     [array addObject:(firstArgumentFilter != nil) ? firstArgumentFilter : [KWNull null]];
     
-    for (NSUInteger i = 1; i < count; ++i)
-    {
+    for (NSUInteger i = 1; i < count; ++i) {
         id object = va_arg(argumentList, id);
         [array addObject:(object != nil) ? object : [KWNull null]];
     }
